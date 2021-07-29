@@ -5,6 +5,29 @@
   background-color: #fafafa;
   height:100vh;
 }
+.Icon{
+	color:'white';
+	padding-top:3;
+	font-size:25px;
+	margin-right:10;
+}
+/* .header{
+	font-size: 10px !important;
+} */
+/* .inputs input{
+	Color:black;
+	background-color:white;
+	font-size:15px;
+}
+.inputs ::placeholder{
+	color:green !important;
+}
+.inputs :hover{
+	border-bottom:1px solid Red !important;
+}
+.inputs input :focus{
+	outline:1px solid yellow  !important;
+} */
 .app-header{
   position: sticky;
   z-index: 1;

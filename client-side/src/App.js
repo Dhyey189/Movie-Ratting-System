@@ -1,4 +1,3 @@
-import './App.css';
 import {Button , Input, Link,} from "@material-ui/core";
 import  Modal  from '@material-ui/core/Modal';
 import {makeStyles} from "@material-ui/core/styles";
@@ -7,14 +6,31 @@ import React, { useState, useEffect } from 'react';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import MailOutlineSharpIcon from '@material-ui/icons/MailOutlineSharp';
 import LockIcon from '@material-ui/icons/Lock';
+import './App.css';
+
 // import axios from 'axios';
 // import bcrypt from 'bcrypt';
-
+var styles={
+  Icons:{color:'black', verticalAlign:'middle' ,fontSize:'25px' , marginRight:10},
+  Inputs:{
+    Color:'black',
+    backgroundColor:'white', 
+    fontSize:'15px',
+    '&:hover':{
+      color:'green !important',
+    }
+  },
+  header:{Color:'black', fontSize:'30px', fontWeight:'normal', borderBottom:'3px solid #000'}
+}
 function getModalStyle() {
   const top = 50  ;
   const left = 50 ;
 
   return {
+    color:'black',
+    fontSize:'30px',
+    backgroundColor:'#fff',
+    'border-radius':'20px',
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
@@ -113,32 +129,37 @@ function App() {
         
         <div style={modalStyle} className={classes.paper}>
         <form className="app-signin-form">
-          <div className="app-title">Sign Up</div>
-        <div><AccountCircleOutlinedIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <h1 className='header' style={styles.header}>Sign Up</h1>
+        <div><AccountCircleOutlinedIcon color="primary" style={styles.Icons}/><Input
+            className='inputs'
             placeholder="Name"
             type="text"
             value={name}
+            style={styles.Inputs}
             onChange={(e)=>{setName(e.target.value)}}
 
           /></div>
-          <div><MailOutlineSharpIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <div><MailOutlineSharpIcon className='Icon' color="primary" style={styles.Icons}/><Input
             placeholder="Email"
             type="email"
             value={email}
+            style={styles.Inputs}
             onChange={(e)=>{setEmail(e.target.value)}}
 
           /></div>
-          <div><LockIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <div><LockIcon color="primary" style={styles.Icons}/><Input
             placeholder="Password"
             type="password"
             value={password}
+            style={styles.Inputs}
             onChange={(e)=>{setPassword(e.target.value)}}
 
           /></div>
-          <div><LockIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <div><LockIcon color="primary" style={styles.Icons}/><Input
             placeholder="Confirm Password"
             type="password"
             value={confirmpassword}
+            style={styles.Inputs}
             onChange={(e)=>{setConfirmPassword(e.target.value)}}
 
           /></div>
@@ -152,18 +173,20 @@ function App() {
         
         <div style={modalStyle} className={classes.paper}>
         <form className="app-signin-form">
-          <p>Login</p>
-          <div><MailOutlineSharpIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <h1 style={styles.header}>Login</h1>
+          <div><MailOutlineSharpIcon color="primary" style={styles.Icons}/><Input
             placeholder="Email"
             type="email"
             value={email}
+            style={styles.Inputs}
             onChange={(e)=>{setEmail(e.target.value)}}
 
           /></div>
-          <div><LockIcon color="primary" style={{paddingTop:3 ,fontSize:25 , marginRight:10}}/><Input
+          <div><LockIcon color="primary" style={styles.Icons}/><Input
             placeholder="Password"
             type="password"
             value={password}
+            style={styles.Inputs}
             onChange={(e)=>{setPassword(e.target.value)}}
 
           /></div>
