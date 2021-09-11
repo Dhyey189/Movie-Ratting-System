@@ -1,7 +1,7 @@
-import { Button, Input, Link } from "@material-ui/core";
+import { Button, Input, Link} from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,props} from "react";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
 import LockIcon from "@material-ui/icons/Lock";
@@ -48,7 +48,7 @@ function getModalStyle() {
 
 
 
-function Signup()
+function Signup({parentCallback})
 {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -56,6 +56,7 @@ function Signup()
     const [confirmpassword, setConfirmPassword] = useState("");
     const [openSignup, setOpenSignup] = useState(false);
     const [modalStyle] = React.useState(getModalStyle);
+    const [emailVerify, setEmailVerify] = useState(null);
     const classes = useStyles();
 
     const signup = (event) => {
@@ -78,8 +79,34 @@ function Signup()
           },
         })
           .then((res) => res.json())
-          .then((data) => console.log(data));
+          .then((data) => parentCallback(data));
       };
+    
+    const isPresentEmail = () => {
+      const e={
+        email:email
+      };
+      return fetch("http://localhost:8000/signup/verifyEmail", 
+      {
+        method: "POST",
+        body: JSON.stringify({email:email}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {console.log("Hello");setEmailVerify(data.success);});
+    }
+
+    var check = () => {
+      isPresentEmail();
+      console.log(emailVerify);
+      if(name!="" && emailVerify && /^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/.test(email) && password!="" && confirmpassword!="" && password == confirmpassword) 
+      {
+        return false;
+      }
+      return true;
+    }
 
     return (
         <>
@@ -161,6 +188,7 @@ function Signup()
               width="inherit"
               color="primary"
               onClick={signup}
+              disabled={check()}
             >
               Sign Up
             </Button>

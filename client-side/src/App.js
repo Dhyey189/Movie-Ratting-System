@@ -14,6 +14,13 @@ import Login from "./authentication/login"
 // import bcrypt from 'bcrypt';
 
 function App() {
+  const [data, setData] = useState(null);
+  
+  function handleCallback(childData){
+    setData(childData);
+    console.log("Hello");
+    console.log(childData);
+  }
 
   return (
     <div className="app">
@@ -32,10 +39,23 @@ function App() {
             </ul>
           </div>
           <div className="account">
-            
-            <Signup />
-
-            <Login />
+            {
+              data?
+                (data.success?
+                  <h1>Success!</h1>
+                  :
+                  <>
+                    <h1>Fail</h1>
+                    <Signup parentCallback={handleCallback}/>
+                    <Login />
+                  </>
+                )
+                :
+                <>
+                  <Signup parentCallback={handleCallback}/>
+                  <Login />
+                </>
+            }
           </div>
         </nav>
       </div>

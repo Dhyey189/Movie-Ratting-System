@@ -1,171 +1,170 @@
 *{
-  margin : 0;
-}
-.app{
-  background-color: #fafafa;
-  height:100vh;
-}
-.Icon{
-	color:'white';
-	padding-top:3;
-	font-size:25px;
-	margin-right:10;
-}
-/* .header{
-	font-size: 10px !important;
-} */
-/* .inputs input{
-	Color:black;
-	background-color:white;
-	font-size:15px;
-}
-.inputs ::placeholder{
-	color:green !important;
-}
-.inputs :hover{
-	border-bottom:1px solid Red !important;
-}
-.inputs input :focus{
-	outline:1px solid yellow  !important;
-} */
-.app-header{
-  position: sticky;
-  z-index: 1;
-  top:0;
-  object-fit: contain;
-  padding: 20px;
-  background-color: white;
-  border-bottom: 1px solid black;
-  display:flex;
-  justify-content:space-between;
-}
-
-
-.app-signin-form{
-	object-fit:inherit;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-.app-title{
-	margin-bottom: 10px;	
-	font-size:large;
-}
-
-.app-login{
-  background-color:lightblue;
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
- * {
-	 padding: 0;
-	 margin: 0;
-	 box-sizing: border-box;
-	 font-family: "Roboto", sans-serif;
-}
- body {
-	 background: #3d3d53;
-	 font-family: "Roboto", sans-serif;
-}
-/* #18181e */
- .logo {
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 margin: 0 16px;
-}
- ul {
-	 list-style: none;
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 flex-direction: row;
-	 list-style: none;
-}
- ul li Link {
-	 height: 60px;
-	 margin: 0 16px;
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 text-decoration: none;
-	 color: #707184;
-	 text-transform: capitalize;
-	 position: relative;
-}
- ul li Link:hover {
-	 color: #ececec;
-}
- ul li Link:hover::after {
-	 content: "";
-	 position: absolute;
-	 width: 100%;
-	 bottom: 0;
-	 border: 1px solid #9466ff;
-}
- .active {
-	 color: #f3f3f3 !important;
-}
- .active::after {
-	 content: "";
-	 position: absolute;
-	 width: 100%;
-	 bottom: 0;
-	 border: 1px solid #9466ff;
-}
- .account {
-	 color: #fff;
-	 cursor: pointer;
-}
- .account a {
-	 font-size: 12px;
-	 text-transform: uppercase;
-	 font-weight: bold;
-}
- .register {
-	 padding: 12px 19px;
-	 background: none;
-	 border: none;
-	 color: #fff;
-	 cursor: pointer;
-}
- .login {
-	 padding: 12px 23px;
-	 background: #9466ff;
-	 border: none;
-	 color: #fff;
-	 border-radius: 4px;
-}
- nav {
+	margin : 0;
+  }
+  .app{
+	background-color: #fafafa;
+	height:100vh;
+  }
+  .Icon{
+	  color:'white';
+	  padding-top:3;
+	  font-size:25px;
+	  margin-right:10;
+  }
+  /* .header{
+	  font-size: 10px !important;
+  } */
+  /* .inputs input{
+	  Color:black;
+	  background-color:white;
+	  font-size:15px;
+  }
+  .inputs ::placeholder{
+	  color:green !important;
+  }
+  .inputs :hover{
+	  border-bottom:1px solid Red !important;
+  }
+  .inputs input :focus{
+	  outline:1px solid yellow  !important;
+  } */
+  .app-header{
+	position: sticky;
+	z-index: 1;
+	top:0;
+	object-fit: contain;
+	padding: 20px;
+	background-color: white;
+	border-bottom: 1px solid black;
+	display:flex;
+	justify-content:space-between;
+  }
+  
+  
+  .app-signin-form{
+	  object-fit:inherit;
+	  display: flex;
+	  flex-direction: column;
+	  align-items: center;
+  }
+  
+  .app-title{
+	  margin-bottom: 10px;	
+	  font-size:large;
+  }
+  
+  .app-login{
+	background-color:lightblue;
+  }
+  
+  @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+   * {
+	   padding: 0;
+	   margin: 0;
+	   box-sizing: border-box;
+	   font-family: "Roboto", sans-serif;
+  }
+   body {
+	   background: #3d3d53;
+	   font-family: "Roboto", sans-serif;
+  }
+  /* #18181e */
+   .logo {
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   margin: 0 16px;
+  }
+   ul {
+	   list-style: none;
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   flex-direction: row;
+	   list-style: none;
+  }
+   ul li Link {
+	   height: 60px;
+	   margin: 0 16px;
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   text-decoration: none;
+	   color: #707184;
+	   text-transform: capitalize;
+	   position: relative;
+  }
+   ul li Link:hover {
+	   color: #ececec;
+  }
+   ul li Link:hover::after {
+	   content: "";
+	   position: absolute;
+	   width: 100%;
+	   bottom: 0;
+	   border: 1px solid #9466ff;
+  }
+   .active {
+	   color: #f3f3f3 !important;
+  }
+   .active::after {
+	   content: "";
+	   position: absolute;
+	   width: 100%;
+	   bottom: 0;
+	   border: 1px solid #9466ff;
+  }
+   .account {
+	   color: #fff;
+	   cursor: pointer;
+  }
+   .account a {
+	   font-size: 12px;
+	   text-transform: uppercase;
+	   font-weight: bold;
+  }
+   .register {
+	   padding: 12px 19px;
+	   background: none;
+	   border: none;
+	   color: #fff;
+	   cursor: pointer;
+  }
+   .login {
+	   padding: 12px 23px;
+	   background: #9466ff;
+	   border: none;
+	   color: #fff;
+	   border-radius: 4px;
+  }
+   nav {
+	   height: 100%;
+	   display: flex;
+	   justify-content: space-between;
+	   align-items: center;
+  
+  }
+   .mainbar {
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+  }
+   
+   .nav-5 {
+	   margin-bottom: 40px;
+	   width: 100%;
+	   background-color: #121214;
+	   height: 78px;
+	   border-bottom: 1px solid #242424;
+  }
+   .nav-5 nav {
+	   width: 100%;
+	   display: flex;
+	   justify-content: space-between;
 	 height: 100%;
-	 display: flex;
-	 justify-content: space-between;
-	 align-items: center;
-
-}
- .mainbar {
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-}
- 
- .nav-5 {
-	 margin-bottom: 40px;
-	 width: 100%;
-	 background-color: #121214;
-	 height: 78px;
-	 border-bottom: 1px solid #242424;
-}
- .nav-5 nav {
-	 width: 100%;
-	 display: flex;
-	 justify-content: space-between;
-   height: 100%;
-}
-
-.btn{
-  background : transparent;
-  color: #fff;
-}
- 
+  }
+  
+  .btn{
+	background : transparent;
+	color: #fff;
+  }
