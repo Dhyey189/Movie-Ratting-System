@@ -7,18 +7,18 @@ import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
 import LockIcon from "@material-ui/icons/Lock";
 
 var styles={
-    Icons:{color:'blue', verticalAlign:'middle' ,fontSize:'25px' , marginRight:10},
-    Inputs:{
-      Color:'black',
-      backgroundColor:'white', 
-      fontSize:'15px',
-      '&:hover':{
-        color:'green !important',
-      }
-    },
-    header:{Color:'black', fontSize:'30px', fontWeight:'normal'},
-    buttons:{border: 'none', width:'inherit', size:'15px', color:'blue'}
-  }
+  Icons:{color:'blue', verticalAlign:'middle' ,fontSize:'25px' , marginRight:10},
+  Inputs:{
+    Color:'black',
+    backgroundColor:'white', 
+    fontSize:'15px',
+    '&:hover':{
+      color:'green !important',
+    }
+  },
+  header:{Color:'black', fontSize:'30px', fontWeight:'normal'},
+  buttons:{border: 'none', width:'inherit', size:'15px', marginTop:'10px', marginBottom:''}
+}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -60,7 +60,7 @@ function Signup({parentCallback})
     const classes = useStyles();
 
     const signup = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         const user = {
           displayName: name,
           email: email,
@@ -79,7 +79,7 @@ function Signup({parentCallback})
           },
         })
           .then((res) => res.json())
-          .then((data) => parentCallback(data));
+          .then((data) => {parentCallback(data);});
       };
     
     const isPresentEmail = () => {
@@ -184,9 +184,11 @@ function Signup({parentCallback})
               />
             </div>
             <Button
+              style={styles.buttons}
               type="submit"
               width="inherit"
               color="primary"
+              variant="contained"
               onClick={signup}
               disabled={check()}
             >

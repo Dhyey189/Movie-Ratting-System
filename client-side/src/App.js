@@ -1,17 +1,8 @@
 import { Button, Input, Link } from "@material-ui/core";
-import Modal from "@material-ui/core/Modal";
-import { makeStyles } from "@material-ui/core/styles";
-// import { SocialIcon } from 'react-social-icons';
 import React, { useState, useEffect } from "react";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
-import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
-import LockIcon from "@material-ui/icons/Lock";
 import "./App.css";
 import Signup from "./authentication/signup";
 import Login from "./authentication/login"
-
-// import axios from 'axios';
-// import bcrypt from 'bcrypt';
 
 function App() {
   const [data, setData] = useState(null);
@@ -19,8 +10,18 @@ function App() {
   function handleCallback(childData){
     setData(childData);
     console.log("Hello");
-    console.log(childData);
+    window.location.reload(false);
   }
+
+  const logout = () =>{
+    localStorage.removeItem("data");
+    window.location.reload(false);
+  }
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(data));
+  }, [data]); 
+  
 
   return (
     <div className="app">
@@ -40,21 +41,33 @@ function App() {
           </div>
           <div className="account">
             {
-              data?
-                (data.success?
-                  <h1>Success!</h1>
+              JSON.parse(localStorage.getItem("data"))?
+              JSON.parse(localStorage.getItem("data")).success?
+                  (<>
+                  <h2>
+                  {JSON.parse(localStorage.getItem("data")).user.displayName}
+                  </h2>
+                  <Button
+                    type = "button"
+                    width="inherit"
+                    color="primary"
+                    variant="contained"
+                    onClick={logout} 
+                  >
+                   Logout 
+                  </Button>
+                  </>)
                   :
-                  <>
-                    <h1>Fail</h1>
+                  (<>
                     <Signup parentCallback={handleCallback}/>
-                    <Login />
-                  </>
-                )
+                    <Login parentCallback={handleCallback}/>
+                  </>)
+                
                 :
-                <>
+                (<>
                   <Signup parentCallback={handleCallback}/>
-                  <Login />
-                </>
+                  <Login parentCallback={handleCallback}/>
+                </>)
             }
           </div>
         </nav>

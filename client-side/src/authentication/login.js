@@ -18,7 +18,7 @@ var styles={
       }
     },
     header:{Color:'black', fontSize:'30px', fontWeight:'normal'},
-    buttons:{border: 'none', width:'inherit', size:'15px', color:'blue'}
+    buttons:{border: 'none', width:'inherit', size:'15px', marginTop:'10px', marginBottom:''}
   }
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +48,7 @@ function getModalStyle() {
 }
 
 
-function Login()
+function Login({parentCallback})
 {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -57,7 +57,7 @@ function Login()
     const classes = useStyles();
 
     const login = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
         const data = {
           email: email,
           password: password,
@@ -75,13 +75,22 @@ function Login()
           },
         })
           .then((res) => res.json())
-          .then((data) => console.log(data.message));
+          .then((data) => {parentCallback(data)});
       };
+
+      var check = () => {
+        if(/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/.test(email) && password!="") 
+        {
+          return false;
+        }
+        return true;
+      }
 
     return (
         <>
         <Button
-              color="inherit"
+              style = {{margin : "0 10px"}}
+              variant="contained"
               onClick={() => {
                 setOpenLogin(true);
               }}
@@ -122,10 +131,13 @@ function Login()
               />
             </div>
             <Button
+              variant="contained"
               type="submit"
               width="inherit"
               color="primary"
               onClick={login}
+              style={styles.buttons}
+              disabled={check()}
             >
               Login
             </Button>
