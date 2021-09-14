@@ -1,5 +1,10 @@
 const User = require("../models/user-models");
 const bcrypt = require("bcrypt");
+
+//  For signUp : createUser, verifyEmail.
+// For login : getUser. 
+
+// User is created using MongoDb database when client tries to signUp.
 createUser = async (req, res) => {
   const body = req.body;
   if (!body) {
@@ -19,7 +24,7 @@ createUser = async (req, res) => {
     .then(() => {
       return res
         .status(200)
-        .json({ success: true, message: "user created successfully" ,user:user});
+        .json({ success: true, message: "user created successfully", user: user });
     })
     .catch((error) => {
       return res.status(400).json({
@@ -29,48 +34,35 @@ createUser = async (req, res) => {
     });
 };
 
-getUser2 = async (req, res) => {
+// Email is verified at backend whether it is already taken or not when client tries to signUp using new Email.
+verifyEmail = async (req, res) => {
+  await User.findOne({ email: req.body.email }, (err, user) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err });
+    }
+    if (user == null) {
+      return res.status(200).json({ success: true });
+    }
+    return res.status(400).json({ success: false });
+  }).catch((err) => console.log(err));
+};
+
+
+// Checking For User authentication when client Tries to Login using Email & Password. 
+getUser = async (req, res) => {
   const body = req.body;
   const user = await User.findOne({ email: body.email });
   if (user) {
     // check user password with hashed password stored in the database
     const validPassword = await bcrypt.compare(body.password, user.password);
     if (validPassword) {
-      res.status(200).json({ success: true,message: "Valid password" , user: user });
+      res.status(200).json({ success: true, message: "Valid password", user: user });
     } else {
-      res.status(400).json({ success: false,error: "Invalid Password" });
+      res.status(400).json({ success: false, message: "Invalid Password", user: null });
     }
   } else {
-    res.status(401).json({ success: false,error: "User does not exist" });
+    res.status(401).json({ success: false, message: "User does not exist", user: null });
   }
 };
 
-getUser = async (req, res) => {
-  await User.findOne({ email: req.params.email }, (err, user) => {
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-
-    if (!user) {
-      return res.status(404).json({ success: false, error: `User not found` });
-    }
-    return res.status(200).json({ success: true, data: user });
-  }).catch((err) => console.log(err));
-};
-
-verifyEmail = async (req,res) => {
-  await User.findOne({ email: req.body.email}, (err, user) => {
-    console.log(req.body.email);
-    console.log(user);
-    if (err) {
-      return res.status(400).json({ success: false, error: err });
-    }
-
-    if (user==null) {
-      return res.status(200).json({ success: true});
-    }
-    return res.status(400).json({ success: false});
-  }).catch((err) => console.log(err));
-};
-
-module.exports = { createUser, getUser, getUser2 ,verifyEmail};
+module.exports = { createUser, getUser, verifyEmail };
