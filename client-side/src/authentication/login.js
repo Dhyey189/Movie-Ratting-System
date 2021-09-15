@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState } from "react";
 import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
 import LockIcon from "@material-ui/icons/Lock";
-
+// Here Material-UI is used for styles so make sure to add below funtions & objects and to download material-ui dependencies.
 
 var styles = {
   Icons: { color: 'blue', verticalAlign: 'middle', fontSize: '25px', marginRight: 10 },
@@ -46,7 +46,7 @@ function getModalStyle() {
   };
 }
 
-
+// Login component to provide client login UI.
 function Login({ parentCallback }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,6 +54,7 @@ function Login({ parentCallback }) {
   const [openLogin, setOpenLogin] = useState(false);
   const classes = useStyles();
 
+  // For Logging in client using Email & Password.
   const login = (event) => {
     event.preventDefault();
     const data = {
@@ -74,6 +75,7 @@ function Login({ parentCallback }) {
       .then((data) => { parentCallback(data) });
   };
 
+  // For validation of email & password on client-side no backend.
   const check = () => {
     if (/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/.test(email) && password !== "") {
       return false;

@@ -1,4 +1,5 @@
 const User = require("../models/user-models");
+// bcrypt is for encrypting passwords so make sure to download in server side dependencies.
 const bcrypt = require("bcrypt");
 
 //  For signUp : createUser, verifyEmail.

@@ -4,6 +4,8 @@ import "./App.css";
 import Signup from "./authentication/signup";
 import Login from "./authentication/login";
 
+
+// App component is starting component of project
 function App() {
   const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
 
@@ -12,6 +14,7 @@ function App() {
     localStorage.setItem("userinfo", JSON.stringify(childData));
   }
 
+  // For logging out the client.
   const logout = (event) => {
     event.preventDefault();
     localStorage.clear();

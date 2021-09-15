@@ -1,11 +1,12 @@
-import { Button, Input} from "@material-ui/core";
+import { Button, Input } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { useState} from "react";
+import React, { useState } from "react";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
 import LockIcon from "@material-ui/icons/Lock";
 import DoneIcon from "@material-ui/icons/Done";
+// Here Material-UI is used for styles so make sure to add below funtions & objects and to download material-ui dependencies.
 
 var styles = {
   Icons: { color: 'blue', verticalAlign: 'middle', fontSize: '25px', marginRight: 10 },
@@ -19,7 +20,7 @@ var styles = {
   },
   header: { Color: 'black', fontSize: '30px', fontWeight: 'normal' },
   buttons: { border: 'none', width: 'inherit', size: '15px', marginTop: '10px', marginBottom: '' },
-  check:{color:"#0001"}
+  check: { color: "#0001" }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ function getModalStyle() {
 }
 
 
-
+// SignUp component so that client can create account using unique email(to avoid duplication in database).
 function Signup({ parentCallback }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -60,6 +61,7 @@ function Signup({ parentCallback }) {
   const [emailVerify, setEmailVerify] = useState(null);
   const classes = useStyles();
 
+  // For signup using diaplayName(not unique), email(unique) and password.
   const signup = (event) => {
     event.preventDefault();
     const user = {
@@ -83,6 +85,7 @@ function Signup({ parentCallback }) {
       .then((data) => { parentCallback(data); });
   };
 
+  // For backend validtion of email to check if email is already taken or not.
   const isPresentEmail = () => {
     return fetch("http://localhost:8000/signup/verifyEmail",
       {
@@ -95,7 +98,8 @@ function Signup({ parentCallback }) {
       .then((res) => res.json())
       .then((data) => { console.log("Hello"); setEmailVerify(data.success); });
   }
-
+  
+  // For client side validation of different fields.
   var check = () => {
     isPresentEmail();
     if (name !== "" && emailVerify && /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email) && password !== "" && confirmpassword !== "" && password === confirmpassword) {
@@ -104,26 +108,23 @@ function Signup({ parentCallback }) {
     return true;
   }
 
-  var checkEmail=()=>{
+  var checkEmail = () => {
     isPresentEmail();
-    if(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(email).toLowerCase()) && emailVerify)
-    {
+    if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(String(email).toLowerCase()) && emailVerify) {
       return true;
     }
     return false;
   }
 
-  var checkName=()=>{
-    if(name!="")
-    {
+  var checkName = () => {
+    if (name != "") {
       return true;
     }
     return false;
   }
 
-  var checkPass=()=>{
-    if(password!="" && confirmpassword!="" && password == confirmpassword)
-    {
+  var checkPass = () => {
+    if (password != "" && confirmpassword != "" && password == confirmpassword) {
       return true;
     }
     return false;
@@ -164,10 +165,10 @@ function Signup({ parentCallback }) {
                 }}
               />
               {
-                checkName()?
-                  <DoneIcon style={{"color":"green"}}/>
-                : 
-                <DoneIcon style={styles.check}/>
+                checkName() ?
+                  <DoneIcon style={{ "color": "green" }} />
+                  :
+                  <DoneIcon style={styles.check} />
               }
             </div>
             <div>
@@ -186,10 +187,10 @@ function Signup({ parentCallback }) {
                 }}
               />
               {
-                checkEmail()?
-                  <DoneIcon style={{"color":"green"}}/>
-                : 
-                <DoneIcon style={styles.check}/>
+                checkEmail() ?
+                  <DoneIcon style={{ "color": "green" }} />
+                  :
+                  <DoneIcon style={styles.check} />
               }
             </div>
             <div>
@@ -204,10 +205,10 @@ function Signup({ parentCallback }) {
                 }}
               />
               {
-                checkPass()?
-                  <DoneIcon style={{"color":"green"}}/>
-                : 
-                <DoneIcon style={styles.check}/>
+                checkPass() ?
+                  <DoneIcon style={{ "color": "green" }} />
+                  :
+                  <DoneIcon style={styles.check} />
               }
             </div>
             <div>
@@ -222,10 +223,10 @@ function Signup({ parentCallback }) {
                 }}
               />
               {
-                checkPass()?
-                  <DoneIcon style={{"color":"green"}}/>
-                : 
-                <DoneIcon style={styles.check}/>
+                checkPass() ?
+                  <DoneIcon style={{ "color": "green" }} />
+                  :
+                  <DoneIcon style={styles.check} />
               }
             </div>
             <Button
