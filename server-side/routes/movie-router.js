@@ -1,4 +1,5 @@
 
+//OMDb API key : 92ca64f5
 const express = require('express')
 
 const MovieCtrl = require('../controllers/movie-ctrl')

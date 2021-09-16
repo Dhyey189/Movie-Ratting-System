@@ -16,8 +16,9 @@ var styles = {
       color: 'green !important',
     }
   },
-  header: { Color: 'black', fontSize: '30px', fontWeight: 'normal' },
-  buttons: { border: 'none', width: 'inherit', size: '15px', marginTop: '10px', marginBottom: '' }
+  header: { color: 'black', fontSize: '30px', fontWeight: 'normal', marginBottom:"10px" },
+  buttons: { border: 'none', width: 'inherit', size: '15px', marginTop: '15px', marginBottom: '' },
+  error:{fontSize:"15px", color:"red", marginTop: '10px', align: 'right'}
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -53,8 +54,9 @@ function Login({ parentCallback }) {
   const [modalStyle] = React.useState(getModalStyle);
   const [openLogin, setOpenLogin] = useState(false);
   const classes = useStyles();
-
+  const [error,setError]=useState(false);
   // For Logging in client using Email & Password.
+
   const login = (event) => {
     event.preventDefault();
     const data = {
@@ -63,7 +65,6 @@ function Login({ parentCallback }) {
     };
     setEmail("");
     setPassword("");
-    setOpenLogin(false);
     return fetch("http://localhost:8000/signup/getUser", {
       method: "POST",
       body: JSON.stringify(data),
@@ -72,7 +73,13 @@ function Login({ parentCallback }) {
       },
     })
       .then((res) => res.json())
-      .then((data) => { parentCallback(data) });
+      .then((data) => { 
+        parentCallback(data);
+        if(data.success)
+          setOpenLogin(false);
+        else
+          setError(true);
+         });
   };
 
   // For validation of email & password on client-side no backend.
@@ -102,7 +109,12 @@ function Login({ parentCallback }) {
       >
         <div style={modalStyle} className={classes.paper}>
           <form className="app-signin-form">
-            <h1 style={styles.header}>Login</h1>
+            {
+              error?
+              <h1 style={styles.header}>Login Failed!</h1>
+              :
+              <h1 style={styles.header}>Login</h1>
+            }
             <div>
               <MailOutlineSharpIcon color="primary" style={styles.Icons} />
               <Input
@@ -127,6 +139,11 @@ function Login({ parentCallback }) {
                 }}
               />
             </div>
+            {
+              error?
+                <p style={styles.error}> Invalid email or password! </p>
+                : null
+            }
             <Button
               variant="contained"
               type="submit"
