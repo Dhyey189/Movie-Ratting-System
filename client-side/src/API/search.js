@@ -29,15 +29,13 @@ function Search({parentCallback}) {
 
     const searchMovie = (e) => {
         e.preventDefault();
-        return (fetch(`http://www.omdbapi.com/?apikey=92ca64f5&s=${search}`)
+        return (fetch(`http://www.omdbapi.com/?apikey=92ca64f5&s=${search}`)// searching from OMDB.com using Rest API.
         .then(res => res.json())
         .then(
           (result) => {
-              parentCallback(result);
+              console.log(result);
+              parentCallback(result,search);
           },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
           (error) => {
             console.error(error);
           }

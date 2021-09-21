@@ -9,19 +9,29 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles, alpha } from "@material-ui/core/styles";
-
+import MovieDetails from'./MovieDetails.js';
 // App component is starting component of project
 
 function App() {
   const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
   const [movieData, setMovie] = useState(null);
+  const [searched,setSearched] = useState(null);
+  const [movieDetails, setMovieDetails] = useState({});
+  const [routeValue,setRouteValue] = useState(null);
 
   function handleCallback(childData) {
     setData(childData);
     localStorage.setItem("userinfo", JSON.stringify(childData));
   }
-  function handleMovieSearch(childData) {
+  function handleMovieSearch(childData,search) {
     setMovie(childData);
+    setSearched(search);
+  }
+
+  function movieCallBack(movieDetails) {
+    setMovieDetails(movieDetails);
+    setRouteValue("/"+movieDetails.result.imdbID);
+    console.log(routeValue);
   }
   // For logging out the client.
   const logout = (event) => {
@@ -31,27 +41,20 @@ function App() {
   }
 
   return (
+    <Router>
+
     <div className="app">
       <div className="nav-5">
         <nav>
-          <div className="mainbar">
-            <Router>
-              <div className="logo"></div>
-              <ul>
-                <li>
-                  <Link>home</Link>
-                </li>
-                <li>
-                  <Link>discover</Link>
-                </li>
-              </ul>
-            </Router>
-          </div>
           
-          <div className="account">
-          <div className="search">
-            <Search parentCallback={handleMovieSearch}/>
+          <div className="mainbar">
+            
           </div>
+
+          <div className="account">
+            <div className="search">
+              <Search parentCallback={handleMovieSearch} />
+            </div>
             {
               data ?
                 data.success ?
@@ -74,7 +77,7 @@ function App() {
                   </>
                 :
                 <>
-                  
+
                   <Signup className="signup" parentCallback={handleCallback} />
                   <Login className="login" parentCallback={handleCallback} />
                 </>
@@ -82,11 +85,22 @@ function App() {
           </div>
         </nav>
       </div>
-      {
-        movieData?
-      <Movies movieData={movieData} />
-      :null
-    }</div>
+          {
+            movieData ?
+              <Movies movieData={movieData} searched={searched} movieCallBack={movieCallBack}/>
+              : null}{
+                routeValue?
+                <>
+                <Switch>
+                <Route name="movieRoute" path={routeValue}>
+                  <MovieDetails />
+                </Route>
+                </Switch>
+                </>
+                :null
+          }
+      </div>
+      </Router>
   );
 }
 export default App;

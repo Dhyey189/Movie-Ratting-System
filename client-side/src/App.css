@@ -172,3 +172,18 @@
 	background : transparent;
 	color: #fff;
   }
+
+  .movie-title{
+	  overflow-y: scroll;
+	  white-space: nowrap;
+  }
+
+  .movie-title::-webkit-scrollbar {
+	  display: none;
+  }
+
+  .movie-title:hover{
+	  overflow:visible;
+	  white-space:normal;
+	  overflow-y: hidden;
+  }
