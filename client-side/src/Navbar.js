@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import "./App.css";
 import Signup from "./authentication/signup";
 import Login from "./authentication/login";
-import Search from "./API/search";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+// import Search from "./API/search";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch} from "react-router-dom";
 import { Button, Input } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
-import { Redirect } from "react-router-dom";
-import Movies from "./API/movies";
-import MovieDetails from "./MovieDetails";
+
+import Search from "./search";
 
 var styles = {
   Inputs: {
@@ -31,45 +30,20 @@ var styles = {
 function Nav() 
 {
   const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
-  const [movieData, setMovieData] = useState(null);
   const [search, setSearch] = useState("");
-  const [movieDetails, setMovieDetails] = useState({});
-  const [routeValue, setRouteValue] = useState(null);
-  const [rd,setRd]=useState(false);
   function handleCallback(childData) {
     setData(childData);
     localStorage.setItem("userinfo", JSON.stringify(childData));
   }
-
+  const history = useHistory();
   const logout = (event) => {
     event.preventDefault();
     localStorage.clear();
     setData(null);
   };
 
-  const searchMovie = (e) => {
-      e.preventDefault();
-      return (fetch(`http://www.omdbapi.com/?apikey=92ca64f5&s=${search}`)// searching from OMDB.com using Rest API.
-      .then(res => res.json())
-      .then(
-        (result) => {
-            setSearch(search);
-            setMovieData(result);
-            setRd(true);
-        },
-        (error) => {
-          console.error(error);
-        }
-      ))
-    }
-  
-  function movieCallBack(movieDetails) {
-    setMovieDetails(movieDetails);
-    setRouteValue("/" + movieDetails.result.imdbID);
-    console.log(routeValue);
-  }
-
   return (
+
     <Router>
     <div>
       <div className="nav-5">
@@ -85,9 +59,20 @@ function Nav()
                       setSearch(e.target.value);
                     }}
                   />
-                  <IconButton type="submit" color="primary" title="click here to search" aria-label="add to shopping cart" onClick={searchMovie}>
-                    <SearchIcon />
+                  
+                  <IconButton type="submit"  color="primary" title="click here to search" aria-label="add to shopping cart" onClick={(e)=>{e.preventDefault();}} 
+                  >
+                  {search?
+                  <Link to={`/search/?movies=${search}`} >
+                    <SearchIcon/>
+                    </Link>
+                    :
+                    <Link to="/" >
+                    <SearchIcon/>
+                    </Link>
+                  }
                   </IconButton>
+                  
                 </form>
               </div>
             </div>
@@ -121,15 +106,10 @@ function Nav()
         </nav>
       </div>
       <div>
-          {
-            rd===true?
-              <Redirect to="/show"/>
-            :null
-          }
         <Switch>
           <Route exact path="/"><p>You are at home!</p></Route>
-          <Route exact path="/show"><Movies movieData={movieData} searched={search} movieCallBack={movieCallBack} /></Route>
-          <Route exact path={routeValue}><MovieDetails/></Route>
+          {/* <Route exact path={`/search/:movies`} component={Search}/> */}
+          <Route path={`/search`} component={Search}/>
         </Switch>
       </div>
     </div>

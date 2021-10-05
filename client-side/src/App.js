@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import "./App.css";
 import Signup from "./authentication/signup";
 import Login from "./authentication/login";
-import Search from "./API/search";
-import Movies from "./API/movies";
+import Search from "./search";
+import Movies from "./movies";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import MovieDetails from "./MovieDetails.js";
 import Navbar from "./Navbar.js";
@@ -14,7 +14,7 @@ function App()
 {
   return (
     <div>
-        <Router>
+        <Router path="/">
           <Navbar />
         </Router>
     </div>

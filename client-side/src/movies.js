@@ -5,13 +5,17 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch} from "react-router-dom";
+import MovieDetails from "./MovieDetails";
 
-function Movies({ movieData, searched,movieCallBack }) 
+function Movies({ movieData}) 
 {
+    const {path,url} = useRouteMatch();
+    const history = useHistory();
+    const [movieDetails, setMovieDetails] = useState({});
+    const [routeValue, setRouteValue] = useState("");
     //first we sort the "movieData" in recently release movie
-    if(movieData!=null && movieData.Response=='True')
+    if(movieData!=null && movieData.Response==='True')
     {
         movieData.Search.sort(function(a, b){   
             let dateA = parseInt(a.Year);
@@ -28,20 +32,22 @@ function Movies({ movieData, searched,movieCallBack })
         });
     }
     const [item,setItem] = useState(null);
-    useEffect(() => {
+     useEffect( () => {
         if(item)
         {
-            return (fetch(`http://www.omdbapi.com/?apikey=92ca64f5&i=${item.imdbID}`)// searching from OMDB.com using Rest API.
+            return  (fetch(`http://www.omdbapi.com/?apikey=92ca64f5&i=${item.imdbID}`)// searching from OMDB.com using Rest API.
             .then(res => res.json())
             .then(
                 (result) => {
                     console.log(result);
-                    movieCallBack({result:result,success:true});
-                    setItem(null);
+                    console.log(url,path);
+                    setMovieDetails(result);
+
+                    // setItem(null);
                 },
                 (error) => {
                     console.error(error);
-                    movieCallBack({success:false});
+                    setRouteValue(`${path}`);
                 }
             ))
         }
@@ -52,16 +58,17 @@ function Movies({ movieData, searched,movieCallBack })
       }, [item])
 
     return (
-
+        <Router>
+            
         <span style={{ 'display': 'flex', 'flexDirection': 'row', 'flexWrap': 'wrap' }}>
             {
-                (movieData && movieData.Response === "True") ?
+                (movieData && movieData.Response==="True" ) ?
                     movieData.Search.map((item, index) => (
                         <div style={{ 'height': '60%', 'width': '300px', 'margin': '10px auto' }}>
-                            <Link to={item.imdbID} >
-                            <Card sx={{ maxWidth: 345 }} >
+                            <Link key={index} to={`/search/details/?id=${item.imdbID}`} >
+                            <Card key={index} sx={{ maxWidth: 345 }} >
                                 
-                                <CardActionArea onClick={(e)=>setItem(item)}>
+                                <CardActionArea onClick={(e)=>{setItem(item);setRouteValue(`${item.imdbID}`);}}>
                                     <CardMedia
                                         component="img"
                                         height="350px"
@@ -85,15 +92,13 @@ function Movies({ movieData, searched,movieCallBack })
                         </div>
                     )
                     )
-                    :
-                    <Redirect to="/" />
-                    // searched !== "" ?
-                    //     <h1>Movie not found with the name {searched} please search precisely!!</h1>
-                    //     :
-                    //     <h1>Please Enter any Movie to search for!!</h1>
+                    :null  
             }
         </span>
-
+        <Switch>
+        <Route exact path={`/search/details/`}><MovieDetails/></Route>
+        </Switch>
+        </Router>
     )
 }
 export default Movies;
