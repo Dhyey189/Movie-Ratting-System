@@ -10,13 +10,12 @@ import MovieDetails from "./MovieDetails.js";
 import Navbar from "./Navbar.js";
 // App component is starting component of project
 
-function App() 
-{
+function App() {
   return (
     <div>
-        <Router path="/">
-          <Navbar />
-        </Router>
+      <Router path="/">
+        <Navbar />
+      </Router>
     </div>
   );
 }

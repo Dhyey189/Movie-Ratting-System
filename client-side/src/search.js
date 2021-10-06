@@ -4,8 +4,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles, alpha } from "@material-ui/core/styles";
 import IconButton from '@material-ui/core/IconButton';
-import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch,useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch, useLocation } from "react-router-dom";
 import Movies from "./movies";
+import MovieDetails from "./MovieDetails";
 
 function Search({ match }) {
   const [movieData, setMovieData] = useState(null);
@@ -18,7 +19,7 @@ function Search({ match }) {
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(result,"hello1");
+          console.log(result, "hello1");
           setMovieData(result);
         },
         (error) => {
@@ -31,9 +32,11 @@ function Search({ match }) {
     <Router>
       <Switch>
         {
-          (query.get('movies') && movieData && movieData.Response==="True") ?
+          (query.get('movies') && movieData && movieData.Response === "True") ?
             <Movies movieData={movieData} /> :
-            <h1>Please Enter Valid Movie Title!!</h1>
+            (query.get('id')) ?
+              <Route path={`/search/details/`}><MovieDetails /></Route> :
+              <h1>Please enter valid input to search for movie!!</h1>
         }
       </Switch>
     </Router>
