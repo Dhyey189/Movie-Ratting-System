@@ -96,6 +96,7 @@
   }
    ul li Link:hover {
 	   color: #ececec;
+	   transform:all 3s ease;
   }
    ul li Link:hover::after {
 	   content: "";
@@ -186,4 +187,57 @@
 	  overflow:visible;
 	  white-space:normal;
 	  overflow-y: hidden;
+  }
+
+  .trailer{
+	width: auto;
+    display: flex;
+    justify-content: center;
+	margin: auto 0;
+  }
+  
+  .titleBar{
+	  display: flex;
+	  flex-direction: row;
+	  justify-content: space-between;
+	  margin-bottom: 20px;
+  }
+  .title{
+	  font-size: 2em;
+	  text-align:justify;
+  }
+  .titleDetails{
+	  display: flex;
+	  flex-direction: column;
+	  width: fit-content;
+	  margin-left: 3%;
+  }
+  .details{
+	  display: flex;
+	  flex-direction: row;
+	  justify-content: space-around;
+	  font-size: 20px;
+  }
+  .detail{
+	  margin:5px 10px;
+  }
+  .rattings{
+	  display: flex;
+	  flex-direction:row;
+	  margin: 0 3%;
+	  float: right;
+  }
+  .ratting{
+	  display: flex;
+	  flex-direction: column;
+	  margin: 0 10px;
+	  justify-content: center;
+  }
+  .rate{
+	  font-size:20px;
+	  text-align: center;
+  }
+  .value{
+	  font-size:18px;
+	  text-align: center;
   }
