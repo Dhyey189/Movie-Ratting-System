@@ -47,7 +47,9 @@ function Nav() {
       <div>
         <div className="nav-5">
           <nav>
-            <div className="mainbar"></div>
+            <div className="mainbar">
+              <Link to="/">Home</Link>
+            </div>
 
             <div className="account">
               <div className="search">
