@@ -376,7 +376,9 @@ h1 {
 /* ratting model*/
 
   
-  fieldset {
+
+  /* fieldset {
+
 	width: 250px;
   }
   fieldset input[type="checkbox"] + label {
@@ -514,7 +516,8 @@ h1 {
 	background-size: cover;
 	width: 26px;
 	height: 26px;
-  }
+
+  } */
   @media (max-width: 1024px) {
 	body .flex .item {
 	  width: 50%;
@@ -534,3 +537,27 @@ h1 {
   
 
 /**For profile dropdown **/
+
+	  
+  }
+  
+  .modal-head{
+	  font-size:25px;
+	  margin-bottom:9px;
+	  margin-top:3px;
+	  
+  }
+
+  .modal-ratting{
+	  margin-top:5px;
+	  margin-left: 50%;
+	  margin-right: 50%;
+  }
+  .modal-input{
+	  margin-bottom:10px;
+	  margin-top:3px;
+  }
+  .modal-button{
+	  margin-top:10px;
+	  margin-bottom:5px
+  }

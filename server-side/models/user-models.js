@@ -7,10 +7,13 @@ const User = new Schema(
     { 
         displayName: { type: String, required: true},
         email: { type: String, required: true},
-        password: { type: String, required: true}
+        password: { type: String, required: true},
+        ratedmovie: {type: Array, default:[]},
+        userratting: {type: Array, default:[]},
+        // It should contain object id of movie-model table, user's ratting.
     },
     {
-        timestamps:true
+        timestamps: true
     }
 )
 
