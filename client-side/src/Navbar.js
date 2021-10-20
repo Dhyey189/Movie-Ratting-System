@@ -7,6 +7,16 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, use
 import { Button, Input } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import SettingsIcon from '@material-ui/icons/Settings';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import Search from "./search";
 
@@ -39,6 +49,17 @@ function Nav({is_search}) {
     event.preventDefault();
     localStorage.clear();
     setData(null);
+    history.push("/");
+  };
+
+  /** For profile dropdown */
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -79,16 +100,74 @@ function Nav({is_search}) {
               {data ? (
                 data.success ? (
                   <>
-                    <h3>{data.user.displayName}</h3>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      width="inherit"
-                      color="primary"
-                      onClick={logout}
-                    >
-                      Logout
-                    </Button>
+                    <React.Fragment>
+                      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+                        <Tooltip title="Account settings">
+                          <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+                            <Avatar sx={{ width: 32, height: 32 }}></Avatar>
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                      <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        onClick={handleClose}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            overflow: 'visible',
+                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                            mt: 1.5,
+                            '& .MuiAvatar-root': {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            '&:before': {
+                              content: '""',
+                              display: 'block',
+                              position: 'absolute',
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: 'background.paper',
+                              transform: 'translateY(-50%) rotate(45deg)',
+                              zIndex: 0,
+                            },
+                          },
+                        }}
+                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                      >
+                        <MenuItem >
+                          <ListItemIcon>
+                            <AccountCircleIcon />
+                          </ListItemIcon>
+                          <Link to="/profile">Profile</Link>
+                        </MenuItem><br/>
+                        <Divider />
+                        <MenuItem>
+                          <ListItemIcon>
+                            <SettingsIcon />
+                          </ListItemIcon>
+                          Settings
+                        </MenuItem><br/>
+                        <MenuItem>
+                          <Button
+                            variant="contained"
+                            type="submit"
+                            width="inherit"
+                            color="primary"
+                            onClick={logout}
+                          >
+                            Logout
+                          </Button>
+                        </MenuItem>
+                      </Menu>
+                    </React.Fragment>
                   </>
                 ) : (
                   <>
