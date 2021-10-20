@@ -27,7 +27,7 @@ var styles = {
   }
 }
 
-function Nav() {
+function Nav({is_search}) {
   const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
   const [search, setSearch] = useState("");
   function handleCallback(childData) {
@@ -42,9 +42,6 @@ function Nav() {
   };
 
   return (
-
-    <Router>
-      <div>
         <div className="nav-5">
           <nav>
             <div className="mainbar">
@@ -53,6 +50,8 @@ function Nav() {
 
             <div className="account">
               <div className="search">
+                {
+                  is_search?
                 <div style={styles.search}>
                   <form>
                     <Input placeholder="Search for a movie..." type="text" value={search} style={styles.Inputs}
@@ -75,7 +74,7 @@ function Nav() {
                     </IconButton>
 
                   </form>
-                </div>
+                </div>:null}
               </div>
               {data ? (
                 data.success ? (
@@ -106,16 +105,6 @@ function Nav() {
             </div>
           </nav>
         </div>
-        <div>
-          <Switch>
-            <Route exact path="/"><p>You are at home!</p></Route>
-            {/* <Route exact path={`/search/:movies`} component={Search}/> */}
-            <Route path={`/search`} component={Search} />
-
-          </Switch>
-        </div>
-      </div>
-    </Router>
   );
 }
 
