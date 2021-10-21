@@ -1,9 +1,19 @@
 import { Button, Input } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
+import {Redirect} from "react-router-dom";
+
 import "./Profile.css"
 
-function Profile({data}) {
+function Profile() {
+
+    const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
+
+    useEffect(() => {
+        setData(JSON.parse(localStorage.getItem("userinfo")));
+    },[localStorage]);
+
     return ( 
+        data!==null?
         <>
             <h1>{data.user.displayName}</h1>
             <div class="container border border-primary bg-primary">
@@ -64,6 +74,8 @@ function Profile({data}) {
                 </div>
                 </div>
         </>
+        : 
+        <Redirect to="/"/>
      );
 }
 

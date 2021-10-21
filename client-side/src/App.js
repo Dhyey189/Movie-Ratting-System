@@ -13,11 +13,6 @@ import {Button} from "react-bootstrap";
 // App component is starting component of project
 
 function App() {
-  const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
-
-  useEffect(() => {
-    setData(JSON.parse(localStorage.getItem("userinfo")));
-  },[]);
 
   return (
     <>
@@ -31,13 +26,10 @@ function App() {
         <Switch>
           <Route path={`/search`} component={Search} />
           {
-            data !==null?
               <Route path={`/profile`}>
                 <Navbar is_search={true}/>
-                <Profile data={data}/>
+                <Profile />
               </Route>
-            : 
-              <Redirect to="/"/>
           }
         </Switch>
         <Latest />
