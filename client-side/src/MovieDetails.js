@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Input } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Rating from '@mui/material/Rating';
+// import Box from '@mui/material/Box';
 import {
   BrowserRouter as Router,
   Switch,
@@ -41,13 +42,14 @@ function getModalStyle() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 1000,
+    width: 650,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
 }));
+
 function MovieDetails() {
   const query = new URLSearchParams(useLocation().search);
   const [movie, setMovie] = useState({});
@@ -55,7 +57,55 @@ function MovieDetails() {
   const [type, setType] = useState("");
   const [openRatting, setOpenRatting] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
+  const [final_rating,setfinalrating] = useState();
   const classes = useStyles();
+
+
+
+  const rateit = (event) => {
+
+    event.preventDefault();
+    // body = {title,imdbid,ratting,userid,imdbvotes,imdbratting}
+    const info = JSON.parse(localStorage.getItem('userinfo'))
+    const body = {
+      title: movie.Title,
+      imdbid: movie.imdbID,
+      ratting: rating,
+      userid: info.user?._id,
+      imdbvotes: movie.imdbVotes,
+      imdbratting: movie.imdbRating,
+      feedback: feedback,
+    };
+    if (body.ratting == null || isNaN(body.ratting)) body.ratting = 0;
+    console.log(body);
+    return fetch("http://localhost:8000/movieapi/setratting/", {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setOpenRatting(false);
+        if (data.error === null || data.error === undefined) {
+          console.log(data);
+          localStorage.setItem('userinfo',JSON.stringify(data));
+          setfinalrating(body.ratting);
+        }
+      });
+  };
+  useEffect(() => {
+    const info = JSON.parse(localStorage.getItem('userinfo'))
+    const index = info.user.userratting.findIndex(element => element.imdbid === query.get("id"));
+    if (index !== -1)
+    {
+      setRating(parseInt(info.user.userratting[index].ratting));
+      setfinalrating(parseInt(info.user.userratting[index].ratting));
+    }
+  }, [query.get("id"), localStorage])
 
   useEffect(() => {
     return (
@@ -102,8 +152,6 @@ function MovieDetails() {
           (result) => {
             console.log(result);
             setMovie(result);
-
-            // setItem(null);
           },
           (error) => {
             console.error(error);
@@ -136,7 +184,11 @@ function MovieDetails() {
           </div>
           <div className="ratting">
             <div className="rate">Your Ratting</div>
-            <div className="value">-/10</div>
+            <div className="value">{
+              (final_rating==null || isNaN(final_rating) || final_rating===0)?
+              <>-/10</>:
+              <>{final_rating}/10</>
+            }</div>
           </div>
           <div>
             <Button onClick={() => setOpenRatting(true)}>Give Ratting</Button>
@@ -196,18 +248,10 @@ function MovieDetails() {
 
           <table class="rwd-table rwd-table-width">
             <tr>
-              <th>Awards</th>
+              <th>Writer/s</th>
             </tr>
             <tr>
-              <td data-th="Awards">{movie.Awards}</td>
-            </tr>
-          </table>
-          <table class="rwd-table rwd-table-width">
-            <tr>
-              <th>Awards</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.Awards}</td>
+              <td data-th="Awards">{movie.Writer}</td>
             </tr>
           </table>
           <table class="rwd-table rwd-table-width">
@@ -220,10 +264,18 @@ function MovieDetails() {
           </table>
           <table class="rwd-table rwd-table-width">
             <tr>
-              <th>Awards</th>
+              <th>Collections</th>
             </tr>
             <tr>
-              <td data-th="Awards">{movie.Awards}</td>
+              <td data-th="Awards">{movie.BoxOffice}</td>
+            </tr>
+          </table>
+          <table class="rwd-table rwd-table-width">
+            <tr>
+              <th>Language</th>
+            </tr>
+            <tr>
+              <td data-th="Awards">{movie.Language}</td>
             </tr>
           </table>
         </div>
@@ -235,20 +287,30 @@ function MovieDetails() {
         }}
       >
         <div style={modalStyle} className={classes.paper} >
-          <div class="item">
-            <div><h3>Give Rattings</h3></div>
-            <fieldset class="rating">
-              <input type="radio" id="star10" name="rating" value="10" /><label class="full" for="star10" title="10 stars"></label>
-              <input type="radio" id="star9" name="rating" value="9" /><label class="full" for="star9" title="9 stars"></label>
-              <input type="radio" id="star8" name="rating" value="8" /><label class="full" for="star8" title="8 stars"></label>
-              <input type="radio" id="star7" name="rating" value="7" /><label class="full" for="star7" title="7 stars"></label>
-              <input type="radio" id="star6" name="rating" value="6" /><label class="full" for="star6" title="6 stars"></label>
-              <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="5 stars"></label>
-              <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="4 stars"></label>
-              <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="3 stars"></label>
-              <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="2 stars"></label>
-              <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="1 star" checked ></label>
-            </fieldset>
+          <div class="item" align="center">
+            <form>
+              <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
+              <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
+              <div className="modal-input"><Input
+                className="inputs"
+                placeholder="Give Your thoughts!!"
+                type="text"
+                onChange={(e) => {
+                  setFeedback(e.target.value)
+                }}
+              /></div>
+              <div className="modal-button">
+                <Button
+                  type="submit"
+                  width="inherit"
+                  color="primary"
+                  variant="contained"
+                  onClick={rateit}
+                >
+                  Rate It
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       </Modal>

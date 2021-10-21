@@ -3,23 +3,13 @@ const Schema = mongoose.Schema
 
 const Movie = new Schema(
     {
-        name: { type: String, required: true },
-        time: { type: [String], required: true },
-        rating: { type: Number, required: true },
+        title: { type: String, required: true },
+        avgratting: { type: Number, required: true },
+        imdbid: { type: String, required: true },
+        totalratesum: { type: Number, required: true, default:0 },
+        ratecount: {type: Number, required: true, default:0},
     },
     { timestamps: true },
 )
 
-const User = new Schema(
-    { 
-        displayName: { type: String, required: true},
-        email: { type: String, required: true},
-        password: { type: String, required: true}
-    },
-    {
-        timestamps:true
-    }
-)
-
-module.exports = mongoose.model('movies', Movie)
-module.exports = mongoose.model('users', User)
+module.exports = mongoose.model('moviedata', Movie)

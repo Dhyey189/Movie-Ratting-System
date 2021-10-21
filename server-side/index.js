@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.use('/api', movieRouter)
+app.use('/movieapi', movieRouter)
 
 // all backend work flow(CRUD operations + validations) of signup and login passes through this router link.
 app.use('/signup',userRouter)
