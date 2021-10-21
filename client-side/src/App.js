@@ -32,7 +32,7 @@ function App() {
               </Route>
           }
         </Switch>
-        <Latest />
+        {/* <Latest /> */}
       </Router>
     </div>
     </>

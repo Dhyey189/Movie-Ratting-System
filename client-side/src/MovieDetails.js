@@ -51,28 +51,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MovieDetails() {
-  const [userinfo, setUserinfo] = useState(JSON.parse(localStorage.getItem("userinfo")));
   const query = new URLSearchParams(useLocation().search);
   const [movie, setMovie] = useState({});
   const [video, setVideo] = useState(null);
   const [type, setType] = useState("");
   const [openRatting, setOpenRatting] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
-  const [feedback,setFeedback] = useState("");
-  const [rating,setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
+  const [final_rating,setfinalrating] = useState();
   const classes = useStyles();
 
+
+
   const rateit = (event) => {
+
     event.preventDefault();
     // body = {title,imdbid,ratting,userid,imdbvotes,imdbratting}
+    const info = JSON.parse(localStorage.getItem('userinfo'))
     const body = {
-      title:movie.Title,
-      imdbid:movie.imdbID,
-      ratting:rating,
-      userid:userinfo.user._id,
-      imdbvotes:movie.imdbVotes,
-      imdbratting:movie.imdbRating,
+      title: movie.Title,
+      imdbid: movie.imdbID,
+      ratting: rating,
+      userid: info.user?._id,
+      imdbvotes: movie.imdbVotes,
+      imdbratting: movie.imdbRating,
+      feedback: feedback,
     };
+    if (body.ratting == null || isNaN(body.ratting)) body.ratting = 0;
     console.log(body);
     return fetch("http://localhost:8000/movieapi/setratting/", {
       method: "POST",
@@ -82,17 +88,24 @@ function MovieDetails() {
       },
     })
       .then((res) => res.json())
-      .then((data) => {setOpenRatting(false);setUserinfo(localStorage.setItem("userinfo", JSON.stringify(data))); console.log(data); });
+      .then((data) => {
+        setOpenRatting(false);
+        if (data.error === null || data.error === undefined) {
+          console.log(data);
+          localStorage.setItem('userinfo',JSON.stringify(data));
+          setfinalrating(body.ratting);
+        }
+      });
   };
-  useEffect(()=>{
-    console.log(userinfo);
+  useEffect(() => {
     const info = JSON.parse(localStorage.getItem('userinfo'))
     const index = info.user.userratting.findIndex(element => element.imdbid === query.get("id"));
-    console.log("index=",index)
-    console.log(info.user.userratting);
-    if(index!==-1)
-    setRating(parseInt(info.user.userratting[index].ratting));
-  },[query.get("id"),localStorage])
+    if (index !== -1)
+    {
+      setRating(parseInt(info.user.userratting[index].ratting));
+      setfinalrating(parseInt(info.user.userratting[index].ratting));
+    }
+  }, [query.get("id"), localStorage])
 
   useEffect(() => {
     return (
@@ -139,8 +152,6 @@ function MovieDetails() {
           (result) => {
             console.log(result);
             setMovie(result);
-
-            // setItem(null);
           },
           (error) => {
             console.error(error);
@@ -173,7 +184,11 @@ function MovieDetails() {
           </div>
           <div className="ratting">
             <div className="rate">Your Ratting</div>
-            <div className="value">-/10</div>
+            <div className="value">{
+              (final_rating==null || isNaN(final_rating) || final_rating===0)?
+              <>-/10</>:
+              <>{final_rating}/10</>
+            }</div>
           </div>
           <div>
             <Button onClick={() => setOpenRatting(true)}>Give Ratting</Button>
@@ -233,18 +248,10 @@ function MovieDetails() {
 
           <table class="rwd-table rwd-table-width">
             <tr>
-              <th>Awards</th>
+              <th>Writer/s</th>
             </tr>
             <tr>
-              <td data-th="Awards">{movie.Awards}</td>
-            </tr>
-          </table>
-          <table class="rwd-table rwd-table-width">
-            <tr>
-              <th>Awards</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.Awards}</td>
+              <td data-th="Awards">{movie.Writer}</td>
             </tr>
           </table>
           <table class="rwd-table rwd-table-width">
@@ -257,10 +264,18 @@ function MovieDetails() {
           </table>
           <table class="rwd-table rwd-table-width">
             <tr>
-              <th>Awards</th>
+              <th>Collections</th>
             </tr>
             <tr>
-              <td data-th="Awards">{movie.Awards}</td>
+              <td data-th="Awards">{movie.BoxOffice}</td>
+            </tr>
+          </table>
+          <table class="rwd-table rwd-table-width">
+            <tr>
+              <th>Language</th>
+            </tr>
+            <tr>
+              <td data-th="Awards">{movie.Language}</td>
             </tr>
           </table>
         </div>
@@ -274,9 +289,9 @@ function MovieDetails() {
         <div style={modalStyle} className={classes.paper} >
           <div class="item" align="center">
             <form>
-            <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
-            <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => {setRating(newValue);}} defaultValue={rating} max={10} size="large" /></div>
-            <div className="modal-input"><Input
+              <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
+              <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
+              <div className="modal-input"><Input
                 className="inputs"
                 placeholder="Give Your thoughts!!"
                 type="text"
@@ -285,17 +300,16 @@ function MovieDetails() {
                 }}
               /></div>
               <div className="modal-button">
-              <Button
-              
-              type="submit"
-              width="inherit"
-              color="primary"
-              variant="contained"
-              onClick={rateit}          
-            >
-              Rate It
-            </Button>
-            </div>
+                <Button
+                  type="submit"
+                  width="inherit"
+                  color="primary"
+                  variant="contained"
+                  onClick={rateit}
+                >
+                  Rate It
+                </Button>
+              </div>
             </form>
           </div>
         </div>
