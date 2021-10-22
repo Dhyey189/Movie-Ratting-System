@@ -48,7 +48,7 @@ function getModalStyle() {
 }
 
 // Login component to provide client login UI.
-function Login({ parentCallback }) {
+function Login({render,setrender}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalStyle] = React.useState(getModalStyle);
@@ -56,7 +56,7 @@ function Login({ parentCallback }) {
   const classes = useStyles();
   const [error,setError]=useState(false);
   // For Logging in client using Email & Password.
-
+  
   const login = (event) => {
     event.preventDefault();
     const data = {
@@ -74,9 +74,12 @@ function Login({ parentCallback }) {
     })
       .then((res) => res.json())
       .then((data) => { 
-        parentCallback(data);
         if(data.success)
+        {
+          localStorage.setItem("userinfo", JSON.stringify(data));
           setOpenLogin(false);
+            setrender(2222);
+        }
         else
           setError(true);
          });
@@ -93,6 +96,7 @@ function Login({ parentCallback }) {
   return (
     <>
       <Button
+      className="authbtn"
         style={{ margin: "0 10px" }}
         variant="contained"
         onClick={() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./App.css";
 import Signup from "./authentication/signup";
 import Login from "./authentication/login";
@@ -36,21 +36,27 @@ var styles = {
     padding: '0 10px',
   }
 }
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue(value => value + 1); // update the state to force render
+}
 
 function Nav({is_search}) {
-  const [data, setData] = useState(JSON.parse(localStorage.getItem("userinfo")));
+
+  const [render,setRender]=useState(null);
   const [search, setSearch] = useState("");
-  function handleCallback(childData) {
-    setData(childData);
-    localStorage.setItem("userinfo", JSON.stringify(childData));
-  }
+  const forceUpdate = useForceUpdate();
   const history = useHistory();
   const logout = (event) => {
     event.preventDefault();
     localStorage.clear();
-    setData(null);
     history.push("/");
   };
+
+  useEffect(()=>{
+    console.log(localStorage);
+
+  },[localStorage]);
 
   /** For profile dropdown */
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -66,7 +72,8 @@ function Nav({is_search}) {
         <div className="nav-5">
           <nav>
             <div className="mainbar">
-              <Link to="/">Home</Link>
+            <Link to="/" className="link"><div className="linktext">Home</div></Link>
+              <Link to="/about" className="link"><div className="linktext">About</div></Link>
             </div>
 
             <div className="account">
@@ -97,12 +104,12 @@ function Nav({is_search}) {
                   </form>
                 </div>:null}
               </div>
-              {data ? (
-                data.success ? (
+              {JSON.parse(localStorage.getItem("userinfo")) ? (
+                JSON.parse(localStorage.getItem("userinfo")).success ? (
                   <>
                     <React.Fragment>
                       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-                        <Tooltip title="Account settings">
+                        <Tooltip title="Account">
                           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
                             <Avatar sx={{ width: 32, height: 32 }}></Avatar>
                           </IconButton>
@@ -142,20 +149,20 @@ function Nav({is_search}) {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                       >
-                        <MenuItem >
+                        <MenuItem style={{margin:"0 10px"}}>
                           <ListItemIcon>
                             <AccountCircleIcon />
                           </ListItemIcon>
                           <Link to="/profile">Profile</Link>
                         </MenuItem><br/>
                         <Divider />
-                        <MenuItem>
+                        <MenuItem style={{margin:"0 10px"}}>
                           <ListItemIcon>
                             <SettingsIcon />
                           </ListItemIcon>
                           Settings
                         </MenuItem><br/>
-                        <MenuItem>
+                        <MenuItem style={{margin:"0 10px"}}>
                           <Button
                             variant="contained"
                             type="submit"
@@ -171,14 +178,14 @@ function Nav({is_search}) {
                   </>
                 ) : (
                   <>
-                    <Signup className="signup" parentCallback={handleCallback} />
-                    <Login className="login" parentCallback={handleCallback} />
+                    <Signup className="signup"  render={render} setrender={setRender}/>
+                    <Login className="login"  render={render} setrender={setRender}/>
                   </>
                 )
               ) : (
                 <>
-                  <Signup className="signup" parentCallback={handleCallback} />
-                  <Login className="login" parentCallback={handleCallback} />
+                  <Signup className="signup" render={render} setrender={setRender} />
+                  <Login className="login" render={render} setrender={setRender}/>
                 </>
               )}
             </div>

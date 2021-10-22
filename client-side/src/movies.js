@@ -8,7 +8,7 @@ import { CardActionArea } from '@mui/material';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch } from "react-router-dom";
 import MovieDetails from "./MovieDetails";
 
-function Movies({ movieData }) {
+function Movies({ movieData ,render,setrender}) {
     const { path, url } = useRouteMatch();
     const history = useHistory();
     const [movieDetails, setMovieDetails] = useState({});
@@ -54,23 +54,23 @@ function Movies({ movieData }) {
     return (
         <Router>
             <Switch>
-                <Route path={`/search/details/`}><MovieDetails /></Route>
+                <Route path={`/search/details/`}><MovieDetails render={render} setrender={setrender}/></Route>
                 <Route path="/search/">
                     <span style={{ 'display': 'flex', 'flexDirection': 'row', 'flexWrap': 'wrap' }}>
                         {
                             (movieData && movieData.Response === "True") ?
                                 movieData.Search.map((item, index) => (
-                                    <div style={{ 'height': '60%', 'width': '300px', 'margin': '10px auto' }}>
-                                        <Link key={index} to={`/search/details/?id=${item.imdbID}`} >
+                                    <div style={{ 'height': '60%', 'width': '300px', 'margin': '20px auto' }}>
+                                        <Link  style={{textDecoration: 'none'}} key={index} to={`/search/details/?id=${item.imdbID}`} >
                                             <Card key={index} sx={{ maxWidth: 345 }} >
-                                                <CardActionArea onClick={(e) => { setItem(item); setRouteValue(`${item.imdbID}`);if(item.Poster=="N/A"); }}>
+                                                <CardActionArea className="moviecard" onClick={(e) => { setItem(item); setRouteValue(`${item.imdbID}`);if(item.Poster=="N/A"); }}>
                                                     <CardMedia
                                                         component="img"
                                                         height="350px"
                                                         image={item.Poster}
                                                         alt="green iguana"
                                                     />
-                                                    <CardContent >
+                                                    <CardContent>
                                                         <Typography gutterBottom variant="h5" component="div">
                                                             <div className="movie-title">{item.Title}</div>
                                                         </Typography>

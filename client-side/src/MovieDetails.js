@@ -4,7 +4,8 @@ import { Button, Input } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Rating from '@mui/material/Rating';
-// import Box from '@mui/material/Box';
+import Login from './authentication/login';
+import Signup from './authentication/signup';
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function MovieDetails() {
+function MovieDetails({render,setrender}) {
   const query = new URLSearchParams(useLocation().search);
   const [movie, setMovie] = useState({});
   const [video, setVideo] = useState(null);
@@ -60,8 +61,9 @@ function MovieDetails() {
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [final_rating,setfinalrating] = useState();
+  const [openLogin,setopenLogin] = useState(false);
+  const [openSignup,setopenSignup] = useState(false);
   const classes = useStyles();
-
 
 
   const rateit = (event) => {
@@ -99,11 +101,13 @@ function MovieDetails() {
   };
   useEffect(() => {
     const info = JSON.parse(localStorage.getItem('userinfo'))
-    const index = info.user.userratting.findIndex(element => element.imdbid === query.get("id"));
-    if (index !== -1)
-    {
-      setRating(parseInt(info.user.userratting[index].ratting));
-      setfinalrating(parseInt(info.user.userratting[index].ratting));
+    if(info!==null){
+      const index = info.user.userratting.findIndex(element => element.imdbid === query.get("id"));
+      if (index !== -1)
+      {
+        setRating(parseInt(info.user.userratting[index].ratting));
+        setfinalrating(parseInt(info.user.userratting[index].ratting));
+      }
     }
   }, [query.get("id"), localStorage])
 
@@ -190,8 +194,8 @@ function MovieDetails() {
               <>{final_rating}/10</>
             }</div>
           </div>
-          <div>
-            <Button onClick={() => setOpenRatting(true)}>Give Ratting</Button>
+          <div  className="ratting">
+            <Button variant="contained" color="primary" onClick={() => setOpenRatting(true)}>Rate</Button>
           </div>
         </div>
       </div>
@@ -287,7 +291,9 @@ function MovieDetails() {
         }}
       >
         <div style={modalStyle} className={classes.paper} >
-          <div class="item" align="center">
+        {
+        (JSON.parse(localStorage.getItem('userinfo')))!==null?
+          (<div class="item" align="center">
             <form>
               <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
               <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
@@ -311,7 +317,13 @@ function MovieDetails() {
                 </Button>
               </div>
             </form>
-          </div>
+          </div>):
+          <div class="item" align="center">
+            <div className="modal-head">Click <Login render={render} setrender={setrender}/> to rate this<i><b> {movie.Type}</b></i></div>
+            <div className="modal-head">Don't have an account click <Signup render={render} setrender={setrender}/> to create one</div>          
+        </div>
+        
+        }
         </div>
       </Modal>
     </>

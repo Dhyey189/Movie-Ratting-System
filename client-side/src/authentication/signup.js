@@ -51,7 +51,7 @@ function getModalStyle() {
 
 
 // SignUp component so that client can create account using unique email(to avoid duplication in database).
-function Signup({ parentCallback }) {
+function Signup({render,setrender}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,7 +82,7 @@ function Signup({ parentCallback }) {
       },
     })
       .then((res) => res.json())
-      .then((data) => { parentCallback(data); });
+      .then((data) => { localStorage.setItem("userinfo", JSON.stringify(data)); setrender(222)});
   };
 
   // For backend validtion of email to check if email is already taken or not.
@@ -96,7 +96,7 @@ function Signup({ parentCallback }) {
         },
       })
       .then((res) => res.json())
-      .then((data) => { console.log("Hello"); setEmailVerify(data.success); });
+      .then((data) => { console.log("Hello"); setEmailVerify(data.success);});
   }
   
   // For client side validation of different fields.
@@ -132,7 +132,7 @@ function Signup({ parentCallback }) {
 
   return (
     <>
-      <Button
+      <Button className="authbtn"
         color="inherit"
         onClick={() => {
           setOpenSignup(true);

@@ -1,37 +1,107 @@
-import react from 'react';
+import React,{ useState, useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
+import Carousel from 'react-bootstrap/Carousel';
+
 
 function Latest() {
 
+    const [list,setList]=useState(null);
+    const data=[];
+
+    useEffect(() => {
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=bf8456bc049664835ee919f3b16f65cb&language=en-US&page=1`)// searching from OMDB.com using Rest API.
+        .then(res => res.json())
+        .then(
+            (result) => {
+                setList(result);
+                console.log(result.results);
+                // const data = result.results.map((item) => ({
+                // src:"https://image.tmdb.org/t/p/w500"+item.poster_path
+                // }))
+                console.log(data);
+                // list.results.map((item,index) => (
+                //   // console.log(item.poster_path)
+                //   data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                // ))
+                console.log(data);
+            },
+            (error) => {
+                console.error(error);
+            }
+        )
+    }, []);
+
     return ( 
         <>
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                    <img class="d-block w-100" src="email1.png" alt="First slide" />
-                    </div>
-                    <div class="carousel-item">
-                    <img class="d-block w-100" src="email2.jpg" alt="Second slide" />
-                    </div>
-                    <div class="carousel-item">
-                    <img class="d-block w-100" src="email3.jpg" alt="Third slide" />
-                    </div>
+
+            <div style={{ display: 'block',margin:"auto 0",justifyContent:"center",maxWidth:"fitContent" }}>
+                <Carousel fade="true" variant="dark">
+                    <Carousel.Item interval={5000}>
+                        <div style={{display: "flex",flexDirection:"row"}}>
+                            {
+                                list!==null?
+                                list.results.slice(0,3).map((item,index) => (
+                                    // data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                                    <img className="d-block w-100" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} style={{padding:"5px",height:"550px"}} alt="Image One"/>
+                                ))
+                                :null
+                            }
+                        </div>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000}>
+                        <div style={{display: "flex",flexDirection:"row"}}>
+                            {
+                                list!==null?
+                                list.results.slice(3,6).map((item,index) => (
+                                    // data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                                    <img className="d-block w-100" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} style={{padding:"5px",height:"550px"}} alt="Image One"/>
+                                ))
+                                :null
+                            }
+                        </div>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000}>
+                        <div style={{display: "flex",flexDirection:"row"}}>
+                            {
+                                list!==null?
+                                list.results.slice(6,9).map((item,index) => (
+                                    // data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                                    <img className="d-block w-100" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} style={{padding:"5px",height:"550px"}} alt="Image One"/>
+                                ))
+                                :null
+                            }
+                        </div>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000}>
+                        <div style={{display: "flex",flexDirection:"row"}}>
+                            {
+                                list!==null?
+                                list.results.slice(9,12).map((item,index) => (
+                                    // data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                                    <img className="d-block w-100" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} style={{padding:"5px",height:"550px"}} alt="Image One"/>
+                                ))
+                                :null
+                            }
+                        </div>
+                    </Carousel.Item>
+                    <Carousel.Item interval={5000}>
+                        <div style={{display: "flex",flexDirection:"row"}}>
+                            {
+                                list!==null?
+                                list.results.slice(12,15).map((item,index) => (
+                                    // data.push("https://image.tmdb.org/t/p/w500"+item.poster_path)
+                                    <img className="d-block w-100" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} style={{padding:"5px",height:"550px"}} alt="Image One"/>
+                                ))
+                                :null
+                            }
+                        </div>
+                    </Carousel.Item>
+                </Carousel>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-                </div>
+
         </>
-    );
-}
+    )
+};
+  
 
 export default Latest;

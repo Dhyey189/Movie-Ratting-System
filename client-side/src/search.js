@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, use
 import Movies from "./movies";
 import MovieDetails from "./MovieDetails";
 
-function Search({ match }) {
+function Search({ match ,render,setrender}) {
   const [movieData, setMovieData] = useState(null);
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
@@ -33,9 +33,9 @@ function Search({ match }) {
       <Switch>
         {
           (query.get('movies') && movieData && movieData.Response === "True") ?
-            <Movies movieData={movieData} /> :
+            <Movies movieData={movieData} render={render} setrender={setrender}/> :
             (query.get('id')) ?
-              <Route path={`/search/details/`}><MovieDetails /></Route> :
+              <Route path={`/search/details/`}><MovieDetails render={render} setrender={setrender}/></Route> :
               <h1>Please enter valid input to search for movie!!</h1>
         }
       </Switch>

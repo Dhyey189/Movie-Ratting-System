@@ -9,31 +9,44 @@ import MovieDetails from "./MovieDetails.js";
 import Navbar from "./Navbar.js";
 import Profile from "./Profile/Profile.js";
 import Latest from "./Carousel/Latest.js";
+import About from "./About/About.js";
+import Footer from "./Footer/Footer.js";
 import {Button} from "react-bootstrap";
 // App component is starting component of project
 
 function App() {
+
+  const [render,setRender]=useState(null);
 
   return (
     <>
     {/* <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> */}
-    <div>
+    <div class="app-main-div">
       <Router> 
-        <Route exact path="/"><Navbar is_search={true}/></Route>
-        <Route  path="/search"><Navbar is_search={false}/></Route>
+        <Route exact path="/">
+          <Navbar is_search={true} />
+          <Latest />
+        </Route>
+        <Route  path="/search"><Navbar is_search={false} /></Route>
         <Switch>
-          <Route path={`/search`} component={Search} />
-          {
-              <Route path={`/profile`}>
-                <Navbar is_search={true}/>
-                <Profile />
-              </Route>
-          }
+          <Route path={`/search`}  >
+            <Search render={render} setrender={setRender} />
+          </Route>
+          <Route path={`/profile`}>
+            <Navbar is_search={true} />
+            <Profile />
+          </Route>
+
+          <Route path={`/about`}>
+            <Navbar is_search={true} />
+            <About />
+          </Route>
         </Switch>
-        {/* <Latest /> */}
       </Router>
+
+      <Footer/>
     </div>
     </>
   );
