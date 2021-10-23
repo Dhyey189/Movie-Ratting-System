@@ -104,6 +104,7 @@ function MovieDetails({render,setrender}) {
       {
         setRating(parseInt(info.user.userratting[index].ratting));
         setfinalrating(parseInt(info.user.userratting[index].ratting));
+        setFeedback(info.user.userratting[index].feedback)
       }
     }
   }, [query.get("id"), localStorage,openRatting])
@@ -197,101 +198,105 @@ function MovieDetails({render,setrender}) {
         </div>
       </div>
       <Router>
-        <div className="trailer iframe-block ">
+        <div className="trailer">
           {
             video != null ?
-              <iframe
-                className="responsive-iframe"
-                src={`https://www.youtube.com/embed/${video[getVideoIndex(video)].key}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <div className="iframe-block ">
+                <iframe
+                  className="responsive-iframe"
+                  src={`https://www.youtube.com/embed/${video[getVideoIndex(video)].key}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
               : null
           }
 
         </div>
-        <table className="rwd-table rwd-table-width-2">
-          <tbody>
-          <tr>
-            <th>Story-Line<div className="genre">
-              {
-                movie.Genre?.split(",").map((genre, index) => (
-                  <span>{genre}</span>
-                ))
-              }
-            </div></th>
-            <th>
-            </th>
-          </tr>
-          <tr>
-            <td data-th="Story-Line">{movie.Plot}</td>
-          </tr>
-          </tbody>
-        </table>
-        <div className="DetailsTables">
-          <table className="rwd-table rwd-table-width">
+        <div>
+          <table className="rwd-table rwd-table-width-2">
             <tbody>
             <tr>
-              <th>Director</th>
+              <th>Story-Line<div className="genre">
+                {
+                  movie.Genre?.split(",").map((genre, index) => (
+                    <span>{genre}</span>
+                  ))
+                }
+              </div></th>
+              <th>
+              </th>
             </tr>
             <tr>
-              <td data-th="Director">{movie.Director}</td>
+              <td data-th="Story-Line">{movie.Plot}</td>
             </tr>
             </tbody>
           </table>
-          <table className="rwd-table rwd-table-width">
-            <tbody>
-            <tr>
-              <th>Actor</th>
-            </tr>
-            <tr>
-              <td data-th="Actor">{movie.Actors}</td>
-            </tr>
-            </tbody>
-          </table>
+          <div className="DetailsTables">
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Director</th>
+              </tr>
+              <tr>
+                <td data-th="Director">{movie.Director}</td>
+              </tr>
+              </tbody>
+            </table>
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Actor</th>
+              </tr>
+              <tr>
+                <td data-th="Actor">{movie.Actors}</td>
+              </tr>
+              </tbody>
+            </table>
 
-          <table className="rwd-table rwd-table-width">
-            <tbody>
-            <tr>
-              <th>Writer/s</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.Writer}</td>
-            </tr>
-            </tbody>
-          </table>
-          <table className="rwd-table rwd-table-width">
-            <tbody>
-            <tr>
-              <th>Awards</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.Awards}</td>
-            </tr>
-            </tbody>
-          </table>
-          <table className="rwd-table rwd-table-width">
-            <tbody>
-            <tr>
-              <th>Collections</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.BoxOffice}</td>
-            </tr>
-            </tbody>
-          </table>
-          <table className="rwd-table rwd-table-width">
-            <tbody>
-            <tr>
-              <th>Language</th>
-            </tr>
-            <tr>
-              <td data-th="Awards">{movie.Language}</td>
-            </tr>
-            </tbody>
-          </table>
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Writer/s</th>
+              </tr>
+              <tr>
+                <td data-th="Awards">{movie.Writer}</td>
+              </tr>
+              </tbody>
+            </table>
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Awards</th>
+              </tr>
+              <tr>
+                <td data-th="Awards">{movie.Awards}</td>
+              </tr>
+              </tbody>
+            </table>
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Collections</th>
+              </tr>
+              <tr>
+                <td data-th="Awards">{movie.BoxOffice}</td>
+              </tr>
+              </tbody>
+            </table>
+            <table className="rwd-table rwd-table-width">
+              <tbody>
+              <tr>
+                <th>Language</th>
+              </tr>
+              <tr>
+                <td data-th="Awards">{movie.Language}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </Router>
       <Modal
@@ -307,14 +312,17 @@ function MovieDetails({render,setrender}) {
             <form>
               <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
               <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
-              <div className="modal-input"><Input
+              <div className="modal-input">
+                <Input
                 className="inputs"
                 placeholder="Give Your thoughts!!"
                 type="text"
+                value={feedback}
                 onChange={(e) => {
                   setFeedback(e.target.value)
                 }}
-              /></div>
+                />
+              </div>
               <div className="modal-button">
                 <Button
                   type="submit"

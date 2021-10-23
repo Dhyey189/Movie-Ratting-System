@@ -36,7 +36,7 @@ function Search({ match ,render,setrender}) {
               (
                 // <h1>Please enter valid input to search for movie!!</h1>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                  <strong>Movie not prsent! </strong> Please enter valid input to search for movie!!
+                  <strong>Movie not present! </strong> Please enter valid input to search for movie!!
                   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onClick={()=>history.push("/")}></button>
                 </div>
               )
