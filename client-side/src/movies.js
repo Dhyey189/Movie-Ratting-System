@@ -5,28 +5,18 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import { BrowserRouter as Router, Switch, Route, Link, useHistory, Redirect, useRouteMatch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory, useRouteMatch } from "react-router-dom";
 import MovieDetails from "./MovieDetails";
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import "./movies.css";
 
 function Movies({ movieData ,render,setrender}) {
     const { path, url } = useRouteMatch();
     const history = useHistory();
     const [movieDetails, setMovieDetails] = useState({});
     const [routeValue, setRouteValue] = useState("");
-    //first we sort the "movieData" in recently release movie
-    if (movieData != null && movieData.Response === 'True') {
-        movieData.Search.sort(function (a, b) {
-            let dateA = parseInt(a.Year);
-            let dateB = parseInt(b.Year);
-            if (dateA < dateB) {
-                return 1;
-            }
-            else if (dateA > dateB) {
-                return -1;
-            }
-            return 0;
-        });
-    }
+
     const [item, setItem] = useState(null);
     useEffect(() => {
         if (item) {
@@ -34,11 +24,7 @@ function Movies({ movieData ,render,setrender}) {
                 .then(res => res.json())
                 .then(
                     (result) => {
-                        console.log(result);
-                        console.log(url, path);
                         setMovieDetails(result);
-
-                        // setItem(null);
                     },
                     (error) => {
                         console.error(error);
@@ -51,11 +37,113 @@ function Movies({ movieData ,render,setrender}) {
         }
     }, [item])
 
+    const options = [
+        {
+            label: "Sort by Newest",
+            value: "new",
+        },
+        {
+            label: "Sort by Oldest",
+            value: "old",
+        },
+        {
+          label: "A-to-Z",
+          value: "atoz",
+        },
+        {
+          label: "Z-to-A",
+          value: "ztoa",
+        },
+    ];
+    
+    const [sort, setSort] = useState("new");
+    
+    function handleChange(e) {
+        setSort(e.target.value);
+    }
+
+    if(sort === "new")
+    {
+        if (movieData != null && movieData.Response === 'True') 
+        {
+            movieData.Search.sort(function (a, b) {
+                let dateA = parseInt(a.Year);
+                let dateB = parseInt(b.Year);
+                if (dateA < dateB) {
+                    return 1;
+                }
+                else if (dateA > dateB) {
+                    return -1;
+                }
+                return 0;
+            });
+        }
+    }
+    else if(sort === "old")
+    {
+        if (movieData != null && movieData.Response === 'True') 
+        {
+            
+            movieData.Search.sort(function (a, b) {
+                let dateA = parseInt(a.Year);
+                let dateB = parseInt(b.Year);
+                if (dateA < dateB) {
+                    return -1;
+                }
+                else if (dateA > dateB) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+    }
+    else if(sort === "atoz")
+    {
+        if (movieData != null && movieData.Response === 'True') 
+        {
+            movieData.Search.sort(function (a, b) {
+                let dateA = a.Title;
+                let dateB = b.Title;
+                if (dateA < dateB) {
+                    return -1;
+                }
+                else if (dateA > dateB) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+    }
+    else if(sort === "ztoa")
+    {
+        if (movieData != null && movieData.Response === 'True') 
+        {
+            movieData.Search.sort(function (a, b) {
+                let dateA = a.Title;
+                let dateB = b.Title;
+                if (dateA < dateB) {
+                    return 1;
+                }
+                else if (dateA > dateB) {
+                    return -1;
+                }
+                return 0;
+            });
+        }
+    }
+
     return (
         <Router>
             <Switch>
                 <Route path={`/search/details/`}><MovieDetails render={render} setrender={setrender}/></Route>
                 <Route path="/search/">
+                    <div className="d-flex justify-content-end" >
+                        <select value={sort} onChange={handleChange} className="select dropdown-menu">
+                            {options.map((option) => (
+                                <option value={option.value} className="dropdown-item">{option.label}</option>
+                            ))}
+                        </select>
+                    </div>
                     <span style={{ 'display': 'flex', 'flexDirection': 'row', 'flexWrap': 'wrap' }}>
                         {
                             (movieData && movieData.Response === "True") ?
@@ -83,8 +171,8 @@ function Movies({ movieData ,render,setrender}) {
                                         </Link>
                                     </div>
                                 )
-                                )
-                                : null
+                            )
+                            : null
                         }
                     </span>
                 </Route>

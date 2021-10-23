@@ -6,7 +6,6 @@ import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined"
 import MailOutlineSharpIcon from "@material-ui/icons/MailOutlineSharp";
 import LockIcon from "@material-ui/icons/Lock";
 import DoneIcon from "@material-ui/icons/Done";
-// Here Material-UI is used for styles so make sure to add below funtions & objects and to download material-ui dependencies.
 
 var styles = {
   Icons: { color: 'blue', verticalAlign: 'middle', fontSize: '25px', marginRight: 10 },
@@ -46,6 +45,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxWidth:"100%"
   };
 }
 
@@ -82,7 +82,10 @@ function Signup({render,setrender}) {
       },
     })
       .then((res) => res.json())
-      .then((data) => { localStorage.setItem("userinfo", JSON.stringify(data)); setrender(222)});
+      .then((data) => { 
+        localStorage.setItem("userinfo", JSON.stringify(data)); 
+        setrender(222);
+      });
   };
 
   // For backend validtion of email to check if email is already taken or not.
@@ -96,7 +99,7 @@ function Signup({render,setrender}) {
         },
       })
       .then((res) => res.json())
-      .then((data) => { console.log("Hello"); setEmailVerify(data.success);});
+      .then((data) => { setEmailVerify(data.success);});
   }
   
   // For client side validation of different fields.
@@ -133,6 +136,8 @@ function Signup({render,setrender}) {
   return (
     <>
       <Button className="authbtn"
+        style={{ margin: "10px" }}
+        variant="text"
         color="inherit"
         onClick={() => {
           setOpenSignup(true);

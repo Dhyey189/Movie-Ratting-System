@@ -44,11 +44,12 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxWidth:"100%"
   };
 }
 
 // Login component to provide client login UI.
-function Login({render,setrender}) {
+function Login({render,setrender,r=null,sr=null}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [modalStyle] = React.useState(getModalStyle);
@@ -78,7 +79,12 @@ function Login({render,setrender}) {
         {
           localStorage.setItem("userinfo", JSON.stringify(data));
           setOpenLogin(false);
-            setrender(2222);
+          setrender(222);
+          if(r!==null && sr!==null)
+          {
+            sr(false);
+            sr(true);
+          }
         }
         else
           setError(true);
@@ -97,8 +103,9 @@ function Login({render,setrender}) {
     <>
       <Button
       className="authbtn"
-        style={{ margin: "0 10px" }}
+        style={{ margin: "10px" }}
         variant="contained"
+        color="primary"
         onClick={() => {
           setOpenLogin(true);
         }}

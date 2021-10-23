@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import { Button, Input } from "@material-ui/core";
 import Modal from "@material-ui/core/Modal";
@@ -6,14 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Rating from '@mui/material/Rating';
 import Login from './authentication/login';
 import Signup from './authentication/signup';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-  Redirect,
-  useRouteMatch,
   useLocation,
 } from "react-router-dom";
 import "./App.css";
@@ -38,6 +34,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    maxWidth: "100%"
   };
 }
 const useStyles = makeStyles((theme) => ({
@@ -109,7 +106,7 @@ function MovieDetails({render,setrender}) {
         setfinalrating(parseInt(info.user.userratting[index].ratting));
       }
     }
-  }, [query.get("id"), localStorage])
+  }, [query.get("id"), localStorage,openRatting])
 
   useEffect(() => {
     return (
@@ -167,8 +164,8 @@ function MovieDetails({render,setrender}) {
 
   return (
     <>
-      <div className="titleBar">
-        <div className="titleDetails">
+      <div className="titleBar d-flex flex-wrap">
+        <div className="titleDetails m-3">
           <div className="title">
             <span>{movie.Title}</span>
           </div>
@@ -200,23 +197,23 @@ function MovieDetails({render,setrender}) {
         </div>
       </div>
       <Router>
-        <div className="trailer">
+        <div className="trailer iframe-block ">
           {
             video != null ?
               <iframe
-                width="853"
-                height="450"
+                className="responsive-iframe"
                 src={`https://www.youtube.com/embed/${video[getVideoIndex(video)].key}`}
                 title="YouTube video player"
-                frameborder="0"
+                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
+                allowFullScreen
               ></iframe>
               : null
           }
 
         </div>
-        <table class="rwd-table rwd-table-width-2">
+        <table className="rwd-table rwd-table-width-2">
+          <tbody>
           <tr>
             <th>Story-Line<div className="genre">
               {
@@ -229,58 +226,71 @@ function MovieDetails({render,setrender}) {
             </th>
           </tr>
           <tr>
-            <td data-th="Directors">{movie.Plot}</td>
+            <td data-th="Story-Line">{movie.Plot}</td>
           </tr>
+          </tbody>
         </table>
         <div className="DetailsTables">
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Director</th>
             </tr>
             <tr>
               <td data-th="Director">{movie.Director}</td>
             </tr>
+            </tbody>
           </table>
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Actor</th>
             </tr>
             <tr>
               <td data-th="Actor">{movie.Actors}</td>
             </tr>
+            </tbody>
           </table>
 
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Writer/s</th>
             </tr>
             <tr>
               <td data-th="Awards">{movie.Writer}</td>
             </tr>
+            </tbody>
           </table>
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Awards</th>
             </tr>
             <tr>
               <td data-th="Awards">{movie.Awards}</td>
             </tr>
+            </tbody>
           </table>
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Collections</th>
             </tr>
             <tr>
               <td data-th="Awards">{movie.BoxOffice}</td>
             </tr>
+            </tbody>
           </table>
-          <table class="rwd-table rwd-table-width">
+          <table className="rwd-table rwd-table-width">
+            <tbody>
             <tr>
               <th>Language</th>
             </tr>
             <tr>
               <td data-th="Awards">{movie.Language}</td>
             </tr>
+            </tbody>
           </table>
         </div>
       </Router>
@@ -293,7 +303,7 @@ function MovieDetails({render,setrender}) {
         <div style={modalStyle} className={classes.paper} >
         {
         (JSON.parse(localStorage.getItem('userinfo')))!==null?
-          (<div class="item" align="center">
+          (<div className="item" align="center">
             <form>
               <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
               <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
@@ -318,9 +328,9 @@ function MovieDetails({render,setrender}) {
               </div>
             </form>
           </div>):
-          <div class="item" align="center">
-            <div className="modal-head">Click <Login render={render} setrender={setrender}/> to rate this<i><b> {movie.Type}</b></i></div>
-            <div className="modal-head">Don't have an account click <Signup render={render} setrender={setrender}/> to create one</div>          
+          <div className="item" align="center">
+            <div className="modal-head">Click <Login render={render} setrender={setrender} r={openRatting} sr={setOpenRatting}/> to rate this<i><b> {movie.Type}</b></i></div>
+            <div className="modal-head">Don't have an account click <Signup render={render} setrender={setrender} /> to create one</div>          
         </div>
         
         }

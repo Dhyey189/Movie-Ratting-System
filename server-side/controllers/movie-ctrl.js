@@ -28,7 +28,7 @@ setRatting = (req, res) => {
             mov.save().then(() => {
                 User.findOne({ _id: body.userid }, (err1, user) => {
                 user.ratedmovie.push(body.imdbid)
-                user.userratting.push({ "movieid": mov._id, "ratting": ratting, "imdbid": body.imdbid })
+                user.userratting.push({ "name":body.title, "ratting": ratting, "imdbid": body.imdbid })
                 user.save().then(() => {
                     return res.status(200).json({
                         success: true,
@@ -96,7 +96,7 @@ setRatting = (req, res) => {
                 }
                 else {
                     user.ratedmovie.push(body.imdbid)
-                    user.userratting.push({ "ratting": ratting, "imdbid": body.imdbid })
+                    user.userratting.push({ "name":body.title,"ratting": ratting, "imdbid": body.imdbid })
                     user.save().then(() => {
                         movie.totalratesum += parseInt(ratting)
                         movie.ratecount++;

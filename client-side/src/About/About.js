@@ -1,67 +1,60 @@
 import "./About.css";
 import React from "react";
-import {useHistory, Redirect} from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
+
 
 function About() {
+  const history = useHistory();
 
-    const history = useHistory();
+  function RedirectForMail(email) {
+    const url = "https://mail.google.com/mail/?view=cm&fs=1&to=" + email;
+    window.open(url);
+  }
 
-    function RedirectForMail (email)
-    {
-        const url="https://mail.google.com/mail/?view=cm&fs=1&to="+email;
-        window.open(url)
-    }
-
-    return ( 
-        <div>
-            <div className="about-section">
-                <h1 style={{color:"yellow"}}>About Us Page</h1>
-                <p>Some text about who we are and what we do.</p>
-                <p>Resize the browser window to see that this page is responsive by the way.</p>
+  return (
+    <div className="about">
+      <div className="about-section">
+        <h1 className="about-title">About Us</h1>
+        <p className="text">M-Reviews is a online Movie rating and information collection system build to collect data about public interest, from their reviews about movies and Web-Shows.  </p>
+        <div className="display text"><p> Data Credits :&nbsp;&nbsp;</p> <span>OMDb and TMDb</span></div>
+      </div>
+        <h1 className="about-title-2">Developer Team</h1>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 mb-30 my-border-left colm">
+            <div className="fotcont">
+              <div className="fothead">
+                <p>Dhyey Patel</p>
+              </div>
+              <p>dhyeypatel1612@gmail.com</p>
+              <div><button className="button" size="small" onClick={()=>(RedirectForMail("dhyeypatel1612@gmail.com"))}>Contact</button></div>
             </div>
-
-            <div>
-                <h2 className="title">Our Team</h2>
+          </div>
+          <div className="col-md-4 mb-30 my-border-left colm">
+            <div className="fotcont">
+              <div className="fothead">
+                <p>Ronak Padaliya</p>
+              </div>
+              <p>ronakpadaliya77@gmail.com</p>
+              <div><button className="button" size="small" onClick={()=>(RedirectForMail("ronakpadaliya77@gmail.com"))}>Contact</button></div>
             </div>
-            <div className="row">
-                <div className="column">
-                    <div className="card">
-                        <div className="container">
-                            <h2>Patel Dhyey</h2>
-                            <p className="title">SEM-5</p>
-                            <h3>Dharmsinh Desai University,Nadiad</h3>
-                            <p>dhyeypatel1612@gmail.com</p>
-                            <p><button className="button" onClick={()=>(RedirectForMail("dhyeypatel1612@gmail.com"))}>Contact</button></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="column">
-                    <div className="card">
-                        <div className="container">
-                            <h3>Padaliya Ronak</h3>
-                            <p className="title">SEM-5</p>
-                            <h4>Dharmsinh Desai University,Nadiad</h4>
-                            <p>ronakpadaliya77@gmail.com</p>
-                            <p><button className="button" onClick={()=>(RedirectForMail("ronakpadaliya77@gmail.com"))}>Contact</button></p>
-                        </div>
-                    </div>
-                </div>
-            
-                <div className="column">
-                    <div className="card">
-                        <div className="container">
-                            <h2>Parmar Darshan</h2>
-                            <p className="title">SEM-5</p>
-                            <h3>Dharmsinh Desai University,Nadiad</h3>
-                            <p>darshanparmar272002@gmail.com</p>
-                            <p><button className="button" onClick={()=>(RedirectForMail("darshanparmar272002@gmail.com"))}>Contact</button></p>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div className="col-md-4 mb-30 my-border-left colm">
+            <div className="fotcont">
+              <div className="fothead">
+                <p>Darshan Parmar</p>
+              </div>
+              <p>
+                  darshanparmar272002@gmail.com
+              </p>
+              <div><button className="button" size="small" onClick={()=>(RedirectForMail("darshanparmar272002@gmail.com"))}>Contact</button></div>
             </div>
+          </div>
         </div>
-     );
+      </div>
+    </div>
+  );
 }
 
 export default About;

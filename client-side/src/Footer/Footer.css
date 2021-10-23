@@ -1,25 +1,10 @@
 .footer {
     margin-top:auto;
-    background-color:#34495e;
+    background-color:black;
+    padding:0 auto;
     color:white;
+    display:flex;
+    justify-content:center;
+    padding:10px 0;
 }
 
-.foot-head{
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color:black;
-    font-weight: bold;
-}
-.foot-content{
-    margin-top: 10px;
-    justify-content:space-between;
-    display: flex;
-    flex:row;
-}
-.foot-aboutus{
-    margin-left: 20%;
-}
-.foot-time{
-    margin-right: 20%;
-}

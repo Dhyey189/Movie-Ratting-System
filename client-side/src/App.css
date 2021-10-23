@@ -50,6 +50,7 @@ body {
   background: white;
   font-family: Georgia, serif;
   overflow-x: hidden;
+  -webkit-user-select: none;
 }
 /* #18181e */
 .logo {
@@ -65,8 +66,12 @@ body {
     width: 150px;
     margin-left:20px;
 }
+.navbar-2{
+  color:white;
+}
 .link{
   text-decoration: none;
+  margin:auto;
 }
 .link:hover{
   text-decoration: none;
@@ -75,6 +80,7 @@ body {
   text-decoration: none;
   color: white;
   font-size:25px;
+  margin:auto 10px;
 }
 .linktext:hover{
   text-decoration: none;
@@ -168,7 +174,13 @@ nav {
   justify-content: space-between;
   height: 100%;
 }
-
+.search-input::-webkit-input-placeholder{
+  color:black;
+}
+.signup-btn{
+  color: aliceblue !important;
+  margin-left: 10px !important;
+}
 .btn {
   background: transparent;
   color: #fff;
@@ -331,7 +343,7 @@ h1 {
   overflow: hidden;
   margin: 20px auto;
   padding: 1%;
-
+  min-width: 300px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -518,11 +530,7 @@ h1 {
   margin-bottom: 1rem;
 }
 .main-profile{
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-user-select: none
+  margin : auto;
 }
 
 .manuItem{
@@ -541,4 +549,44 @@ h1 {
 
 .active::after{
   border:none!important;
+}
+
+/* Ifame style */
+
+.iframe-block {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+}
+
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media screen and (min-width:600px){
+  .iframe-block {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  }
+  
+  .responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    bottom: 0;
+    right: 0;
+    width: 80%;
+    height: 80%;
+    border: none;
+  }
 }

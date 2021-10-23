@@ -1,4 +1,3 @@
-// import { Button, Input } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
@@ -11,49 +10,49 @@ function Profile() {
   var arr = [];
   useEffect(() => {
     setData(JSON.parse(localStorage.getItem("userinfo")));
-    console.log(JSON.parse(localStorage.getItem("userinfo")).user.userratting.slice(-5)[0]);
+    
   }, [localStorage]);
 
   return data !== null ? (
     <>
-      <div class="container border border-primary bg-primary main-profile">
-        <div class="row gutters">
-          <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 pading">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="account-settings">
-                  <div class="user-profile">
-                    <div class="user-avatar">
+      <div className="container border border-primary bg-primary main-profile">
+        <div className="row gutters">
+          <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 pading">
+            <div className="card h-100">
+              <div className="card-body">
+                <div className="account-settings">
+                  <div className="user-profile">
+                    <div className="user-avatar">
                       <img
                         src="https://bootdey.com/img/Content/avatar/avatar7.png"
                         alt="Maxwell Admin"
                       />
                     </div>
-                    <h5 class="user-name">{data.user.displayName}</h5>
-                    <h6 class="user-email">{data.user.email}</h6>
+                    <h5 className="user-name">{data.user.displayName}</h5>
+                    <h6 className="user-email">{data.user.email}</h6>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label class="label" for="fullName">Full Name</label>
-                      <div class="content">{data.user.displayName}</div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label className="label" for="fullName">Full Name</label>
+                      <div className="content">{data.user.displayName}</div>
                     </div>
                   </div>
-                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="form-group">
-                      <label  class="label" for="eMail">Email</label>
-                      <div class="content">{data.user.email}</div>
+                  <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                    <div className="form-group">
+                      <label  className="label" for="eMail">Email</label>
+                      <div className="content">{data.user.email}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 pading">
-            <div class="card h-100">
-              <div class="card-body">
-                <div class="row gutters">
-                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                    <h6 class="mb-2 text-primary">Personal Details</h6>
+          <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12 pading">
+            <div className="card h-100">
+              <div className="card-body">
+                <div className="row gutters">
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h6 className="mb-2 text-primary">Recently Rated</h6>
                   </div>
                   <div className="tableT">
                       <div className="tr"  style={{fontWeight:"Bolder"}}>
