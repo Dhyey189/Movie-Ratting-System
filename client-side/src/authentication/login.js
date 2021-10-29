@@ -66,7 +66,7 @@ function Login({render,setrender,r=null,sr=null}) {
     };
     setEmail("");
     setPassword("");
-    return fetch("http://localhost:8000/signup/getUser", {
+    return fetch("http://localhost:8000/accounts/getUser", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

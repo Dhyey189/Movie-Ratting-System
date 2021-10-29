@@ -27,6 +27,6 @@ app.get('/', (req, res) => {
 app.use('/movieapi', movieRouter)
 
 // all backend work flow(CRUD operations + validations) of signup and login passes through this router link.
-app.use('/signup',userRouter)
+app.use('/accounts',userRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

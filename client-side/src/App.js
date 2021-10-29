@@ -4,7 +4,7 @@ import Search from "./search";
 import { BrowserRouter as Router, Switch, Route, Link ,Redirect} from "react-router-dom";
 import Navbar from "./Navbar.js";
 import Profile from "./Profile/Profile.js";
-import Latest from "./Carousel/Latest.js";
+import Home from "./Home/Home.js";
 import About from "./About/About.js";
 import Footer from "./Footer/Footer.js";
 
@@ -20,10 +20,10 @@ function App() {
   return (
     <>
     <div className="app-main-div">
-      <Router> 
+      <Router>                    
         <Route exact path="/">
           <Navbar is_search={true} pcallback={set}/>
-          <Latest />
+          <Home />
         </Route>
         <Route  path="/search"><Navbar is_search={false} pcallback={set}/></Route>
         <Switch>

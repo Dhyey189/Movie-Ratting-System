@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect,Link } from "react-router-dom";
 
 import "./Profile.css";
 
@@ -59,9 +59,11 @@ function Profile() {
                           <div className="td"><label for="fullName">Movie</label></div>
                           <div className="td"><label for="fullName">Rattings</label></div>
                           </div>
-                  {JSON.parse(localStorage.getItem("userinfo")).user.userratting.slice(-5).reverse().map((item) => (
+                  {JSON.parse(localStorage.getItem("userinfo")).user.userratting.slice(-5).reverse().map((item,index) => (
                       <div className="tr">
+                      <Link style={{textDecoration: 'none'}} key={index} to={`/search/details/?id=${item.imdbid}`}>
                       <div className="td"><label for="fullName">{item.name}</label></div>
+                      </Link>
                       <div className="td">
                         {item.ratting}
                       </div>

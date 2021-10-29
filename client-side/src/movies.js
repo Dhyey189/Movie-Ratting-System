@@ -62,74 +62,65 @@ function Movies({ movieData ,render,setrender}) {
         setSort(e.target.value);
     }
 
-    if(sort === "new")
+    if (movieData != null && movieData.Response === 'True') 
     {
-        if (movieData != null && movieData.Response === 'True') 
-        {
-            movieData.Search.sort(function (a, b) {
-                let dateA = parseInt(a.Year);
-                let dateB = parseInt(b.Year);
-                if (dateA < dateB) {
-                    return 1;
-                }
-                else if (dateA > dateB) {
-                    return -1;
-                }
-                return 0;
-            });
-        }
-    }
-    else if(sort === "old")
-    {
-        if (movieData != null && movieData.Response === 'True') 
+        if(sort === "new")
         {
             
-            movieData.Search.sort(function (a, b) {
-                let dateA = parseInt(a.Year);
-                let dateB = parseInt(b.Year);
-                if (dateA < dateB) {
-                    return -1;
-                }
-                else if (dateA > dateB) {
-                    return 1;
-                }
-                return 0;
-            });
+                movieData.Search.sort(function (a, b) {
+                    let dateA = parseInt(a.Year);
+                    let dateB = parseInt(b.Year);
+                    if (dateA < dateB) {
+                        return 1;
+                    }
+                    else if (dateA > dateB) {
+                        return -1;
+                    }
+                    return 0;
+                });
         }
-    }
-    else if(sort === "atoz")
-    {
-        if (movieData != null && movieData.Response === 'True') 
+        else if(sort === "old")
+        { 
+                movieData.Search.sort(function (a, b) {
+                    let dateA = parseInt(a.Year);
+                    let dateB = parseInt(b.Year);
+                    if (dateA < dateB) {
+                        return -1;
+                    }
+                    else if (dateA > dateB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+        }
+        else if(sort === "atoz")
         {
-            movieData.Search.sort(function (a, b) {
-                let dateA = a.Title;
-                let dateB = b.Title;
-                if (dateA < dateB) {
-                    return -1;
-                }
-                else if (dateA > dateB) {
-                    return 1;
-                }
-                return 0;
-            });
+                movieData.Search.sort(function (a, b) {
+                    let dateA = a.Title;
+                    let dateB = b.Title;
+                    if (dateA < dateB) {
+                        return -1;
+                    }
+                    else if (dateA > dateB) {
+                        return 1;
+                    }
+                    return 0;
+                });
         }
-    }
-    else if(sort === "ztoa")
-    {
-        if (movieData != null && movieData.Response === 'True') 
+        else if(sort === "ztoa")
         {
-            movieData.Search.sort(function (a, b) {
-                let dateA = a.Title;
-                let dateB = b.Title;
-                if (dateA < dateB) {
-                    return 1;
-                }
-                else if (dateA > dateB) {
-                    return -1;
-                }
-                return 0;
-            });
-        }
+                movieData.Search.sort(function (a, b) {
+                    let dateA = a.Title;
+                    let dateB = b.Title;
+                    if (dateA < dateB) {
+                        return 1;
+                    }
+                    else if (dateA > dateB) {
+                        return -1;
+                    }
+                    return 0;
+                });
+            }
     }
 
     return (

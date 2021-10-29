@@ -36,16 +36,11 @@ var styles = {
     margin: 'auto'
   }
 }
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue(value => value + 1); // update the state to force render
-}
 
 function Nav({ is_search ,pcallback}) {
 
   const [render, setRender] = useState(null);
   const [search, setSearch] = useState("");
-  const forceUpdate = useForceUpdate();
   const history = useHistory();
   const logout = (event) => {
     event.preventDefault();
@@ -94,17 +89,12 @@ function Nav({ is_search ,pcallback}) {
                         }}
                       />
 
-                      <IconButton type="submit" color="primary" title="click here to search" aria-label="add to shopping cart" onClick={(e) => { e.preventDefault(); }}
+                      <IconButton type="submit" color="primary" title="click here to search" aria-label="Search" onClick={(e) => { history.push('/search/?movies='+search);e.preventDefault(); }}
                       >
-                        {search ?
                           <Link to={`/search/?movies=${search}`} >
                             <SearchIcon />
                           </Link>
-                          :
-                          <Link to="/" >
-                            <SearchIcon />
-                          </Link>
-                        }
+                        
                       </IconButton>
 
                     </form>

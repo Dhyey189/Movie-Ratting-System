@@ -190,6 +190,9 @@ nav {
   overflow-y: scroll;
   white-space: nowrap;
 }
+.runtime{
+  font-size:0.5em;
+}
 
 .movie-title::-webkit-scrollbar {
   display: none;
@@ -589,3 +592,4 @@ h1 {
     border: none;
   }
 }
+

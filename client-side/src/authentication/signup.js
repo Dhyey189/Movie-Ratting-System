@@ -74,7 +74,7 @@ function Signup({render,setrender}) {
     setPassword("");
     setConfirmPassword("");
     setOpenSignup(false);
-    return fetch("http://localhost:8000/signup/usersignup", {
+    return fetch("http://localhost:8000/accounts/usersignup", {
       method: "POST",
       body: JSON.stringify(user),
       headers: {
@@ -90,7 +90,7 @@ function Signup({render,setrender}) {
 
   // For backend validtion of email to check if email is already taken or not.
   const isPresentEmail = () => {
-    return fetch("http://localhost:8000/signup/verifyEmail",
+    return fetch("http://localhost:8000/accounts/verifyEmail",
       {
         method: "POST",
         body: JSON.stringify({ email: email }),

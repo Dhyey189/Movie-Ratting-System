@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Carousel from 'react-bootstrap/Carousel';
 import { useHistory} from "react-router-dom";
 
-function Latest() {
+function Home() {
 
     const [list,setList]=useState(null);
     const history = useHistory();
@@ -111,4 +111,4 @@ function Latest() {
 };
   
 
-export default Latest;
+export default Home;

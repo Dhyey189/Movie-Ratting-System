@@ -52,14 +52,11 @@ function MovieDetails({render,setrender}) {
   const query = new URLSearchParams(useLocation().search);
   const [movie, setMovie] = useState({});
   const [video, setVideo] = useState(null);
-  const [type, setType] = useState("");
   const [openRatting, setOpenRatting] = useState(false);
   const [modalStyle] = React.useState(getModalStyle);
   const [feedback, setFeedback] = useState("");
   const [rating, setRating] = useState(0);
   const [final_rating,setfinalrating] = useState();
-  const [openLogin,setopenLogin] = useState(false);
-  const [openSignup,setopenSignup] = useState(false);
   const classes = useStyles();
 
 
@@ -119,7 +116,6 @@ function MovieDetails({render,setrender}) {
               fetch(`http://api.themoviedb.org/3/movie/${result.movie_results[0].id}?api_key=ec2573c833f28eda19e0f31ac19ec943&append_to_response=videos`)
                 .then((r) => r.json())
                 .then((details) => {
-                  setType("movie");
                   console.log(details);
                   if (details.videos.results.length > 0)
                     setVideo(details.videos.results);
@@ -130,7 +126,6 @@ function MovieDetails({render,setrender}) {
               fetch(`http://api.themoviedb.org/3/tv/${result.tv_results[0].id}?api_key=ec2573c833f28eda19e0f31ac19ec943&append_to_response=videos`)
                 .then((r) => r.json())
                 .then((details) => {
-                  setType("series");
                   if (details.videos.results.length > 0)
                     setVideo(details.videos.results);
                   console.log(details);
@@ -168,7 +163,7 @@ function MovieDetails({render,setrender}) {
       <div className="titleBar d-flex flex-wrap">
         <div className="titleDetails m-3">
           <div className="title">
-            <span>{movie.Title}</span>
+            <span>{movie.Title} <span className="runtime">({movie.Runtime})</span></span>
           </div>
           <div className="details">
             <div className="detail">
@@ -181,11 +176,11 @@ function MovieDetails({render,setrender}) {
         </div>
         <div className="rattings">
           <div className="ratting">
-            <div className="rate">Rattings</div>
+            <div className="rate">Ratings</div>
             <div className="value">{movie.imdbRating}/10</div>
           </div>
           <div className="ratting">
-            <div className="rate">Your Ratting</div>
+            <div className="rate">Your Rating</div>
             <div className="value">{
               (final_rating==null || isNaN(final_rating) || final_rating===0)?
               <>-/10</>:
@@ -310,7 +305,7 @@ function MovieDetails({render,setrender}) {
         (JSON.parse(localStorage.getItem('userinfo')))!==null?
           (<div className="item" align="center">
             <form>
-              <div className="modal-head">Give Your Rattings to<i><b> {movie.Title}</b></i></div>
+              <div className="modal-head">Give Your Ratings to<i><b> {movie.Title}</b></i></div>
               <div classNmae="modal-ratting"><Rating name="m-reviews-ratting" value={rating} onChange={(event, newValue) => { setRating(newValue); }} defaultValue={rating} max={10} size="large" /></div>
               <div className="modal-input">
                 <Input
