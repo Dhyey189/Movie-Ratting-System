@@ -8,13 +8,14 @@ about movies by simply creating an account or simply just login with
 existing account.
 
 ## Functionalities Overview
-=>Search a Movie.
+- Search a Movie.
 
-=>View details of a movie like trailer, cast, director, box office collection etc.
+- View details of a movie like trailer, cast, director, box office collection etc.
 
-=>Give ratings and views to any Movie.
+- Give ratings and views to any Movie.
 
-
+- More Details found in [Project Report](https://github.com/Dhyey189/Movie-Ratting-System/blob/master/Project-Report.pdf)
+  
 ## Tech Stack
 Used reactjs for frontend, node+express for backend and mongodb for database.
 
